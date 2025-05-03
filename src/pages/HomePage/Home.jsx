@@ -1,4 +1,3 @@
-// Updated Home.jsx
 import { useState } from "react";
 import { useVenues } from "../../hooks/useVenues";
 import { useVenueSearch } from "../../hooks/useVenueSearch";
@@ -10,7 +9,15 @@ import Pagination from "../../components/Pagination";
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
+  const itemsPerPage = 15;
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    // Smooth scroll to top after pagination
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 0);
+  };
 
   const { venues, loading: loadingVenues, error: venuesError } = useVenues();
   const {
@@ -25,7 +32,6 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
 
   const isSearching = Array.isArray(results) && results.length > 0;
-
   const rawVenues = isSearching ? results : venues;
 
   const filteredVenues = selectedCategory
@@ -102,12 +108,16 @@ export default function Home() {
         </div>
       )}
 
-      <Pagination
-        currentPage={currentPage}
-        totalItems={sortedVenues.length}
-        itemsPerPage={itemsPerPage}
-        onPageChange={setCurrentPage}
-      />
+      <div className="flex justify-center mt-8">
+        <div className="flex space-x-2 min-w-[320px] justify-center items-center">
+          <Pagination
+            currentPage={currentPage}
+            totalItems={sortedVenues.length}
+            itemsPerPage={itemsPerPage}
+            onPageChange={handlePageChange}
+          />
+        </div>
+      </div>
     </div>
   );
 }

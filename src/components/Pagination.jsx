@@ -7,28 +7,76 @@ export default function Pagination({
   onPageChange,
 }) {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
-
   if (totalPages <= 1) return null;
 
+  const pageNumbers = [];
+  const maxVisiblePages = 5;
+
+  let startPage = Math.max(1, currentPage - 2);
+  let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+  if (endPage - startPage < maxVisiblePages - 1) {
+    startPage = Math.max(1, endPage - maxVisiblePages + 1);
+  }
+
+  for (let i = startPage; i <= endPage; i++) {
+    pageNumbers.push(i);
+  }
+
   return (
-    <div className="flex justify-center mt-6 gap-4">
+    <div className="flex justify-center mt-8 flex-wrap gap-2 text-sm">
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="px-4 py-2 border rounded disabled:opacity-50"
+        className="w-8 h-8 border rounded disabled:opacity-50"
       >
-        Prev
+        &lt;
       </button>
 
-      {/* Page numbers (optional for now) */}
-      <span className="py-2 px-4 font-medium">{currentPage}</span>
+      {startPage > 1 && (
+        <>
+          <button
+            onClick={() => onPageChange(1)}
+            className="w-8 h-8 border rounded"
+          >
+            1
+          </button>
+          {startPage > 2 && <span className="w-8 h-8 text-center">…</span>}
+        </>
+      )}
+
+      {pageNumbers.map((page) => (
+        <button
+          key={page}
+          onClick={() => onPageChange(page)}
+          className={`w-8 h-8 border rounded ${
+            page === currentPage ? "bg-gray-300 font-semibold" : ""
+          }`}
+        >
+          {page}
+        </button>
+      ))}
+
+      {endPage < totalPages && (
+        <>
+          {endPage < totalPages - 1 && (
+            <span className="w-8 h-8 text-center">…</span>
+          )}
+          <button
+            onClick={() => onPageChange(totalPages)}
+            className="w-8 h-8 border rounded"
+          >
+            {totalPages}
+          </button>
+        </>
+      )}
 
       <button
         onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage >= totalPages}
-        className="px-4 py-2 border rounded disabled:opacity-50"
+        disabled={currentPage === totalPages}
+        className="w-8 h-8 border rounded disabled:opacity-50"
       >
-        Next
+        &gt;
       </button>
     </div>
   );
