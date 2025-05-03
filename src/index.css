@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+:root {
+  --primary-red: #df3030;
+  --primary-red-dark: #c62a2a;
+  --secondary-teal: #215f69;
+  --secondary-teal-dark: #1b4e56;
+  --secondary-teal-light: #2f7f88;
+
+  --neutral-black: #303030;
+  --neutral-black-light: #393939;
+
+  --neutral-grey-light: #e2e2e2;
+  --neutral-grey-basic: #b1b1b1;
+  --neutral-grey-medium: #454545;
+  --neutral-grey-dark: #595959;
+
+  --neutral-white: #ffffff;
+}
+
+.button-primary {
+  background-color: var(--primary-red);
+  color: var(--neutral-white);
+}
+
+.button-primary:hover {
+  background-color: var(--primary-red-dark);
+}
