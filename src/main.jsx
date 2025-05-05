@@ -5,9 +5,10 @@ import "./index.css";
 
 // Pages
 import Home from "./pages/HomePage/Home";
-// import ProfilePage from "./pages/ProfilePage";
-// import LoginRegisterPage from "./pages/LoginRegisterPage";
 import SinglePage from "./pages/SinglePage";
+import FavouritesPage from "./pages/FavouritesPage";
+import LoginRegisterPage from "./pages/LoginRegisterPage";
+import ProfilePage from "./pages/ProfilePage";
 
 // Layout
 import Layout from "./components/Layout";
@@ -19,8 +20,9 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: "venue/:id", element: <SinglePage /> },
-      // { path: "profile", element: <ProfilePage /> },
-      // { path: "login", element: <LoginRegisterPage /> },
+      { path: "favourites", element: <FavouritesPage /> },
+      { path: "profile", element: <ProfilePage /> },
+      { path: "login", element: <LoginRegisterPage /> },
     ],
   },
 ]);

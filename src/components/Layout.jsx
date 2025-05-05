@@ -2,13 +2,16 @@ import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
-import useAuthStore from "../stores/authStore"; // ✅ correct path
+import useAuthStore from "../stores/authStore";
+import useFavouritesStore from "../stores/favouritesStore"; // ⬅️ Add this
 
 export default function Layout() {
   const { loadUserFromStorage } = useAuthStore();
+  const { loadFavourites } = useFavouritesStore(); // ⬅️ Access the store
 
   useEffect(() => {
     loadUserFromStorage();
+    loadFavourites(); // ⬅️ Load favourites on app load
   }, []);
 
   return (
