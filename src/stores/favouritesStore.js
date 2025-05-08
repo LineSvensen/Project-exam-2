@@ -1,32 +1,34 @@
 import { create } from "zustand";
+import useAuthStore from "./authStore"; // Ensure the path is correct
 
-const useFavouritesStore = create((set) => ({
+const useFavouritesStore = create((set, get) => ({
   favourites: [],
-  addFavourite: (venue) =>
-    set((state) => {
-      const updated = [...state.favourites, venue];
-      localStorage.setItem("favourites", JSON.stringify(updated));
-      return { favourites: updated };
-    }),
-  removeFavourite: (id) =>
-    set((state) => {
-      const updated = state.favourites.filter((venue) => venue.id !== id);
-      localStorage.setItem("favourites", JSON.stringify(updated));
-      return { favourites: updated };
-    }),
-  loadFavourites: async () => {
-    const stored = JSON.parse(localStorage.getItem("favourites")) || [];
-    const fetched = await Promise.all(
-      stored.map(async (venue) => {
-        if (typeof venue === "object") return venue;
-        const res = await fetch(
-          `https://v2.api.noroff.dev/holidaze/venues/${venue}`
-        );
-        const json = await res.json();
-        return json.data;
-      })
-    );
-    set({ favourites: fetched });
+
+  addFavourite: (venue) => {
+    const { user } = useAuthStore.getState();
+    if (!user?.name) return;
+
+    const updated = [...get().favourites, venue];
+    localStorage.setItem(`favourites_${user.name}`, JSON.stringify(updated));
+    set({ favourites: updated });
+  },
+
+  removeFavourite: (id) => {
+    const { user } = useAuthStore.getState();
+    if (!user?.name) return;
+
+    const updated = get().favourites.filter((venue) => venue.id !== id);
+    localStorage.setItem(`favourites_${user.name}`, JSON.stringify(updated));
+    set({ favourites: updated });
+  },
+
+  loadFavourites: () => {
+    const { user } = useAuthStore.getState();
+    if (!user?.name) return;
+
+    const stored =
+      JSON.parse(localStorage.getItem(`favourites_${user.name}`)) || [];
+    set({ favourites: stored });
   },
 }));
 

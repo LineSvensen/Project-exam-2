@@ -1,13 +1,35 @@
-import { useEffect } from "react";
+import useAuthStore from "../../stores/authStore";
 import useFavouritesStore from "../../stores/favouritesStore";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import VenueCard from "../../components/Venue/VenueCard";
 
 export default function FavouritesPage() {
+  const { user } = useAuthStore();
   const { favourites, loadFavourites } = useFavouritesStore();
 
   useEffect(() => {
-    loadFavourites();
-  }, []);
+    if (user) {
+      loadFavourites();
+    }
+  }, [user]);
+
+  if (!user) {
+    return (
+      <div className="max-w-6xl mx-auto px-4 py-8 text-center">
+        <h1 className="text-2xl font-bold mb-4">Favourites</h1>
+        <p className="text-gray-600 mb-4">
+          You must be logged in to view and save favourites.
+        </p>
+        <Link
+          to="/login"
+          className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
+        >
+          Log in or Register
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">

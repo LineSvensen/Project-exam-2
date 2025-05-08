@@ -10,6 +10,7 @@ import BookingSummary from "../../components/BookingSummary";
 import useAuthStore from "../../stores/authStore";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import useFavouritesStore from "../../stores/favouritesStore";
+import FavouriteButton from "../../components/FavouritesButton";
 
 export default function SinglePage() {
   const { id } = useParams();
@@ -45,20 +46,11 @@ export default function SinglePage() {
   return (
     <div className="max-w-4xl mx-auto p-4">
       <div className="relative">
-        <div className="relative">
-          <ImageGallery media={venue.media} altFallback={venue.name} />
-          {!isOwner && (
-            <button
-              onClick={toggleFavourite}
-              className="absolute top-4 right-4 p-2 bg-white/70 rounded shadow-md text-black hover:text-gray-700 cursor-pointer transition z-10 flex justify-center items-center"
-              title={
-                isFavourite ? "Remove from favourites" : "Add to favourites"
-              }
-            >
-              {isFavourite ? <FaHeart /> : <FaRegHeart />}
-            </button>
-          )}
+        {/* Move FavouriteButton inside ImageGallery wrapper */}
+        <div className="absolute top-4 right-4 z-10">
+          <FavouriteButton venue={venue} />
         </div>
+        <ImageGallery media={venue.media} altFallback={venue.name} />
       </div>
       <div className="mt-6">
         <VenueInfo venue={venue} />
