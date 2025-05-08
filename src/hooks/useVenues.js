@@ -1,3 +1,4 @@
+// hooks/useVenues.js
 import { useEffect, useState } from "react";
 
 const API_BASE = import.meta.env.VITE_API_BASE;
@@ -10,12 +11,11 @@ export function useVenues() {
   useEffect(() => {
     async function fetchVenues() {
       try {
-        const res = await fetch(`${API_BASE}/venues`);
+        const res = await fetch(`${API_BASE}/venues?_owner=true`); // <-- Fix here
         if (!res.ok) throw new Error("Failed to fetch venues");
 
         const data = await res.json();
-        console.log("API response:", data); // should show { data: [...] }
-        setVenues(data.data);
+        setVenues(data.data || []);
       } catch (err) {
         setError(err.message);
       } finally {

@@ -57,21 +57,21 @@ export default function ProfilePage() {
 
       <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
         <a
-          href="#"
+          href="/trips"
           className="bg-white shadow rounded p-4 hover:bg-gray-100 transition flex flex-col items-center"
         >
           <img src={tripIcon} alt="My Trips" className="w-12 h-12 mb-2" />
           <span className="font-semibold">My Trips</span>
         </a>
         <a
-          href="#"
+          href="/venues"
           className="bg-white shadow rounded p-4 hover:bg-gray-100 transition flex flex-col items-center"
         >
           <img src={venueIcon} alt="My Venues" className="w-12 h-12 mb-2" />
           <span className="font-semibold">My Venues</span>
         </a>
         <a
-          href=" #"
+          href="/guests"
           className="bg-white shadow rounded p-4 hover:bg-gray-100 transition flex flex-col items-center"
         >
           <img src={guestsIcon} alt="My Guests" className="w-12 h-12 mb-2" />

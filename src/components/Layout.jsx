@@ -3,21 +3,21 @@ import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import useAuthStore from "../stores/authStore";
-import useFavouritesStore from "../stores/favouritesStore"; // ⬅️ Add this
+import useFavouritesStore from "../stores/favouritesStore";
 
 export default function Layout() {
   const { loadUserFromStorage } = useAuthStore();
-  const { loadFavourites } = useFavouritesStore(); // ⬅️ Access the store
+  const { loadFavourites } = useFavouritesStore();
 
   useEffect(() => {
     loadUserFromStorage();
-    loadFavourites(); // ⬅️ Load favourites on app load
+    loadFavourites();
   }, []);
 
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-grow max-w-6xl mx-auto p-4">
+      <main className="flex-grow">
         <Outlet />
       </main>
       <Footer />

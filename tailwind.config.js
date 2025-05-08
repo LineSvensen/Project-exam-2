@@ -10,5 +10,5 @@ export default {
       colors: {},
     },
   },
-  plugins: [],
+  plugins: require("@tailwindcss/aspect-ratio"),
 };

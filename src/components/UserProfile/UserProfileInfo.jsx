@@ -1,15 +1,9 @@
+import Avatar from "../Avatar";
+
 export default function UserProfileInfo({ user }) {
   return (
     <div className="bg-white shadow rounded p-4">
-      {user.avatar?.url ? (
-        <img
-          src={user.avatar.url}
-          alt={user.avatar.alt || "User avatar"}
-          className="w-28 h-28 rounded-full object-cover"
-        />
-      ) : (
-        <p className="text-sm text-gray-400">No avatar provided</p>
-      )}
+      <Avatar url={user.avatar?.url} size="w-28 h-28" />
       <h2 className="text-xl font-semibold mb-2">{user.name}</h2>
       <p className="text-gray-600 mb-2">{user.email}</p>
 

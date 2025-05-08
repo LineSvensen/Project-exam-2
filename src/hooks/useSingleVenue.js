@@ -12,7 +12,8 @@ export function useVenue(id) {
 
     async function fetchVenue() {
       try {
-        const res = await fetch(`${API_BASE}/venues/${id}`);
+        const res = await fetch(`${API_BASE}/venues/${id}?_owner=true`);
+
         if (!res.ok) throw new Error("Failed to fetch venue");
 
         const data = await res.json();

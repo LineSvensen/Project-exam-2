@@ -26,3 +26,24 @@
 .button-primary:hover {
   background-color: var(--primary-red-dark);
 }
+
+.custom-swiper .swiper-button-next,
+.custom-swiper .swiper-button-prev {
+  color: #ffffff;
+  background-color: #30303073;
+  border-radius: 4px;
+  width: 40px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-swiper .swiper-pagination-bullet {
+  background-color: #303030;
+  width: 10px;
+  height: 10px;
+}
+.custom-swiper .swiper-pagination-bullet-active {
+  background-color: #ffffff;
+}

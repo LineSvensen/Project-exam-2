@@ -27,8 +27,8 @@ export default function VenueReviews({ venueId, user }) {
   };
 
   return (
-    <div className="mt-8">
-      <h3 className="text-xl font-semibold mb-4">Guest Reviews</h3>
+    <div className="mt-8 font-inter">
+      <h3 className="text-lg font-bold mb-4">Guest Reviews</h3>
 
       {user && (
         <form onSubmit={handleSubmit} className="mb-6">
