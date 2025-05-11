@@ -15,6 +15,7 @@ export default function LoginRegisterForm() {
     email: "",
     password: "",
     avatarUrl: "",
+    venueManager: false,
   });
 
   const handleLogin = async (e) => {
@@ -67,6 +68,7 @@ export default function LoginRegisterForm() {
         name: registerData.name,
         email: registerData.email,
         password: registerData.password,
+        venueManager: registerData.venueManager,
       };
 
       if (registerData.avatarUrl) {
@@ -192,6 +194,19 @@ export default function LoginRegisterForm() {
         <p className="text-xs text-gray-500 mb-3">
           Provide a valid URL for your avatar image.
         </p>
+        <label className="flex items-center gap-2 mb-4">
+          <input
+            type="checkbox"
+            checked={registerData.venueManager}
+            onChange={(e) =>
+              setRegisterData({
+                ...registerData,
+                venueManager: e.target.checked,
+              })
+            }
+          />
+          I want to list venues (I'm a venue manager)
+        </label>
         <button
           type="submit"
           className="w-full bg-red-500 text-white py-2 rounded hover:bg-red-600"

@@ -1,6 +1,8 @@
 import { useUserVenues } from "../../hooks/useUserVenues";
 import { Link } from "react-router-dom";
 import VenueCard from "../../components/Venue/VenueCard";
+import MyVenueCard from "../../components/Venue/MyVenueCard"; // instead of VenueCard
+import { useVenueBookings } from "../../hooks/useVenueBookings";
 
 export default function MyVenuesPage() {
   const { venues, loading, error } = useUserVenues();
@@ -37,7 +39,7 @@ export default function MyVenuesPage() {
       ) : (
         <div className="space-y-6">
           {venues.map((venue) => (
-            <VenueCard key={venue.id} venue={venue} />
+            <MyVenueCard key={venue.id} venue={venue} />
           ))}
         </div>
       )}

@@ -10,7 +10,7 @@ import { FiPlus } from "react-icons/fi"; // Feather Icons (clean + professional)
 
 const categories = [
   { label: "Cabin", keyword: ["cabin"], icon: cabinIcon },
-  { label: "Modern", keyword: ["modern", "luxury"], icon: modernIcon },
+  { label: "Modern", keyword: ["modern+luxury"], icon: modernIcon },
   { label: "Beach", keyword: ["beach"], icon: beachIcon },
   { label: "Pool", keyword: ["pool"], icon: poolIcon },
   { label: "Castle", keyword: ["castle"], icon: castleIcon },

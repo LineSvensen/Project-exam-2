@@ -6,7 +6,7 @@ const API_BASE = import.meta.env.VITE_API_BASE;
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 export default function VenueForm({ mode = "create", initialData = {} }) {
-  const { token } = useAuthStore();
+  const { token, user } = useAuthStore();
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -59,7 +59,9 @@ export default function VenueForm({ mode = "create", initialData = {} }) {
         },
         body: JSON.stringify({
           ...form,
-          media: form.media.map((url) => ({ url })),
+          media: form.media
+            .filter((url) => url.trim() !== "")
+            .map((url) => ({ url })),
         }),
       });
 
@@ -67,7 +69,24 @@ export default function VenueForm({ mode = "create", initialData = {} }) {
       if (!res.ok)
         throw new Error(data.errors?.[0]?.message || "Failed to create venue");
 
-      navigate("/venues");
+      // ✅ Set venueManager true if not already
+      if (!user?.venueManager) {
+        await fetch(`${API_BASE}/profiles/${user.name}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+            "X-Noroff-API-Key": API_KEY,
+          },
+          body: JSON.stringify({ venueManager: true }),
+        });
+
+        const updatedUser = { ...user, venueManager: true };
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+        useAuthStore.setState({ user: updatedUser });
+      }
+
+      navigate("/profile");
     } catch (err) {
       alert(err.message);
     }
@@ -75,6 +94,7 @@ export default function VenueForm({ mode = "create", initialData = {} }) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      <h2 className="font-semibold">Venue name:</h2>
       <input
         name="name"
         value={form.name}
@@ -83,6 +103,8 @@ export default function VenueForm({ mode = "create", initialData = {} }) {
         placeholder="Venue name"
         required
       />
+
+      <h2 className="font-semibold">Description:</h2>
       <textarea
         name="description"
         value={form.description}
@@ -91,6 +113,8 @@ export default function VenueForm({ mode = "create", initialData = {} }) {
         placeholder="Description"
         required
       />
+
+      <h2 className="font-semibold">Price:</h2>
       <input
         name="price"
         type="number"
@@ -100,6 +124,8 @@ export default function VenueForm({ mode = "create", initialData = {} }) {
         placeholder="Price"
         required
       />
+
+      <h2 className="font-semibold">Max guests:</h2>
       <input
         name="maxGuests"
         type="number"
@@ -124,7 +150,7 @@ export default function VenueForm({ mode = "create", initialData = {} }) {
         + Add another image
       </button>
 
-      <h2 className="font-semibold mt-4">Amenities</h2>
+      <h2 className="font-semibold mt-4">This venue offers:</h2>
       {Object.keys(form.meta).map((key) => (
         <label key={key} className="block">
           <input

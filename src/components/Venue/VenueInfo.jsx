@@ -3,7 +3,7 @@ import breakfastImg from "../../assets/breakfast.png";
 import petsImg from "../../assets/pets.png";
 import parkingImg from "../../assets/parking.png";
 import wifiImg from "../../assets/wifi.png";
-import Avatar from "../Avatar";
+import Avatar from "../Shared/Avatar";
 
 export default function VenueInfo({ venue }) {
   const [showFullDesc, setShowFullDesc] = useState(false);
@@ -64,7 +64,9 @@ export default function VenueInfo({ venue }) {
             </p>
 
             {/* full text. desktop. */}
-            <p className="text-gray-700 hidden md:block">{description}</p>
+            <p className="text-gray-700 hidden md:block truncate">
+              {description}
+            </p>
           </div>
 
           <h3 className="font-bold mb-2">This place offers:</h3>

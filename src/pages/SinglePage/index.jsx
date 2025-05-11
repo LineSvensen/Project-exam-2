@@ -1,16 +1,15 @@
 import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useVenue } from "../../hooks/useSingleVenue";
-import { useState } from "react";
 import { useVenueBookings } from "../../hooks/useVenueBookings";
 import ImageGallery from "../../components/Venue/VenueImageGallery";
 import VenueInfo from "../../components/Venue/VenueInfo";
 import VenueReviews from "../../components/Venue/VenueReviews";
-import BookingCalendar from "../../components/BookingCalendar";
-import BookingSummary from "../../components/BookingSummary";
+import BookingCalendar from "../../components/Booking/BookingCalendar";
+import BookingSummary from "../../components/Booking/BookingSummary";
 import useAuthStore from "../../stores/authStore";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
+import FavouriteButton from "../../components/Buttons/FavouritesButton";
 import useFavouritesStore from "../../stores/favouritesStore";
-import FavouriteButton from "../../components/FavouritesButton";
 
 export default function SinglePage() {
   const { id } = useParams();
@@ -23,30 +22,28 @@ export default function SinglePage() {
     guests: 1,
   });
 
+  useEffect(() => {
+    console.log("📦 Dates received by SinglePage:", selectedDates);
+  }, [selectedDates]);
+
   const { venue, loading: venueLoading, error: venueError } = useVenue(id);
   const {
     bookings,
     loading: bookingsLoading,
     error: bookingsError,
-  } = useVenueBookings();
+    refetchBookings,
+  } = useVenueBookings(id); // ✅ pass the ID explicitly
 
-  // Early returns always come AFTER hooks
   if (venueLoading || bookingsLoading) return <p>Loading venue...</p>;
   if (venueError || bookingsError)
     return <p className="text-red-500">Error loading venue or bookings</p>;
   if (!venue) return <p>Venue not found.</p>;
 
   const isOwner = venue.owner?.name === user?.name;
-  const isFavourite = favourites.some((fav) => fav.id === venue.id);
-
-  const toggleFavourite = () => {
-    isFavourite ? removeFavourite(venue.id) : addFavourite(venue);
-  };
 
   return (
     <div className="max-w-4xl mx-auto p-4">
       <div className="relative">
-        {/* Move FavouriteButton inside ImageGallery wrapper */}
         <div className="absolute top-4 right-4 z-10">
           <FavouriteButton venue={venue} />
         </div>
@@ -67,8 +64,8 @@ export default function SinglePage() {
           <>
             <div className="w-full md:w-2/3">
               <BookingCalendar
+                bookings={bookings}
                 onSelectDates={setSelectedDates}
-                bookings={venue.bookings}
               />
             </div>
 
@@ -79,6 +76,9 @@ export default function SinglePage() {
                 pricePerNight={venue.price}
                 venueId={venue.id}
                 guests={selectedDates.guests}
+                bookings={bookings}
+                venueName={venue.name}
+                refetchBookings={refetchBookings}
               />
             </div>
           </>

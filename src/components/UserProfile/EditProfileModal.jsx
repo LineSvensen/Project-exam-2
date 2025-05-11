@@ -3,20 +3,20 @@ import useAuthStore from "../../stores/authStore";
 
 export default function EditProfileModal({ onClose }) {
   const { user, token, login } = useAuthStore();
+
   const API_KEY = import.meta.env.VITE_API_KEY;
   const [form, setForm] = useState({
     avatar: user?.avatar?.url || "",
     bio: user?.bio || "",
-    venueManager: user?.venueManager || false,
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value } = e.target;
     setForm((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: value,
     }));
   };
 
@@ -38,7 +38,6 @@ export default function EditProfileModal({ onClose }) {
           body: JSON.stringify({
             bio: form.bio,
             avatar: form.avatar ? { url: form.avatar } : undefined,
-            venueManager: form.venueManager,
           }),
         }
       );
@@ -70,32 +69,24 @@ export default function EditProfileModal({ onClose }) {
               onChange={handleChange}
               placeholder="Avatar URL"
               className="w-full border p-2 rounded"
-            />{" "}
+            />
           </label>
 
           <label className="block">
             <span className="block mb-1 font-medium">
               Write about yourself:
             </span>
-
             <textarea
               name="bio"
               value={form.bio}
               onChange={handleChange}
               placeholder="Short bio..."
-              className="w-full border p-2 rounded"
+              className="w-full h-42 border p-2 rounded"
             />
           </label>
-          <label className="flex items-center gap-2 text-sm">
-            <input
-              type="checkbox"
-              name="venueManager"
-              checked={form.venueManager}
-              onChange={handleChange}
-            />
-            I'm a Venue Manager
-          </label>
+
           {error && <p className="text-red-500 text-sm">{error}</p>}
+
           <div className="flex justify-between mt-4">
             <button
               type="button"

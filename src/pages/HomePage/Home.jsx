@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { useVenues } from "../../hooks/useVenues";
 import { useVenueSearch } from "../../hooks/useVenueSearch";
 import VenueCard from "../../components/Venue/VenueCard";
@@ -6,19 +6,17 @@ import SearchBar from "../../components/Search";
 import CategoryFilter from "../../components/CategoryFilter";
 import SortBy from "../../components/SortBy";
 import Pagination from "../../components/Pagination";
+import { matchesCategory } from "../../utils/categoryMatcher";
+import useVenueStore from "../../stores/venueStore";
+import { useSearchParams } from "react-router-dom";
+import useFilterStore from "../../stores/filterStore";
 
 export default function Home() {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentPage = Number(searchParams.get("page")) || 1;
   const itemsPerPage = 15;
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-    // Smooth scroll to top after pagination
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 0);
-  };
-
+  const allVenues = useVenueStore((state) => state.allVenues);
   const { venues, loading: loadingVenues, error: venuesError } = useVenues();
   const {
     results,
@@ -27,23 +25,72 @@ export default function Home() {
     searchVenues,
   } = useVenueSearch();
 
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [sortOption, setSortOption] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
+  const { category, sort, search, setCategory, setSort, setSearch } =
+    useFilterStore();
 
-  const isSearching = Array.isArray(results) && results.length > 0;
-  const rawVenues = isSearching ? results : venues;
+  const isSearching = !!search && results.length > 0;
+  const rawVenues = isSearching ? results : allVenues;
 
-  const filteredVenues = selectedCategory
-    ? rawVenues.filter((venue) =>
-        selectedCategory.some((keyword) =>
-          (venue.title + venue.description).toLowerCase().includes(keyword)
+  const handlePageChange = (page) => {
+    setSearchParams({ page: String(page) });
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 0);
+  };
+
+  const handleCategorySelect = (keywords) => {
+    setCategory(keywords);
+    setSearch(""); // clear search
+    setSearchParams({ page: "1" });
+  };
+
+  const handleSearch = (query) => {
+    setSearch(query);
+    setCategory([]); // clear category
+    setSearchParams({ page: "1" });
+
+    if (sort) {
+      const [s, o] = sort.split("-");
+      searchVenues(query, s, o);
+    } else {
+      searchVenues(query);
+    }
+  };
+
+  const handleSortChange = (option) => {
+    setSort(option);
+    setSearchParams({ page: "1" });
+
+    if (search) {
+      const [s, o] = option.split("-");
+      searchVenues(search, s, o);
+    }
+  };
+
+  useEffect(() => {
+    const y = sessionStorage.getItem("scrollY");
+    if (y) {
+      window.scrollTo({ top: parseInt(y), behavior: "instant" });
+      sessionStorage.removeItem("scrollY");
+    }
+  }, [rawVenues]);
+
+  const filteredVenues =
+    category.length > 0
+      ? rawVenues.filter((venue) =>
+          matchesCategory(
+            venue.name,
+            venue.description,
+            venue.location,
+            venue.meta,
+            venue.tags,
+            category
+          )
         )
-      )
-    : rawVenues;
+      : rawVenues;
 
   const sortedVenues = [...filteredVenues].sort((a, b) => {
-    switch (sortOption) {
+    switch (sort) {
       case "price-low":
         return a.price - b.price;
       case "price-high":
@@ -51,7 +98,7 @@ export default function Home() {
       case "rating-high":
         return (b.rating || 0) - (a.rating || 0);
       default:
-        return 0;
+        return new Date(b.created) - new Date(a.created); // ✅ Default: newest first
     }
   });
 
@@ -61,26 +108,6 @@ export default function Home() {
   if (finalError)
     return <div className="text-red-500 p-8">Error: {finalError}</div>;
 
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-    setCurrentPage(1);
-    if (sortOption) {
-      const [sort, sortOrder] = sortOption.split("-");
-      searchVenues(query, sort, sortOrder);
-    } else {
-      searchVenues(query);
-    }
-  };
-
-  const handleSortChange = (option) => {
-    setSortOption(option);
-    setCurrentPage(1);
-    if (searchQuery) {
-      const [sort, sortOrder] = option.split("-");
-      searchVenues(searchQuery, sort, sortOrder);
-    }
-  };
-
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold mb-6">
@@ -88,12 +115,7 @@ export default function Home() {
       </h1>
 
       <SearchBar onSearch={handleSearch} />
-      <CategoryFilter
-        onSelect={(cat) => {
-          setSelectedCategory(cat);
-          setCurrentPage(1);
-        }}
-      />
+      <CategoryFilter onSelect={handleCategorySelect} />
       <SortBy onChange={handleSortChange} />
 
       {sortedVenues.length === 0 ? (

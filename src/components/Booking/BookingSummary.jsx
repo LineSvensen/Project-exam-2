@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useAuthStore from "../stores/authStore";
+import useAuthStore from "../../stores/authStore";
+import { format } from "date-fns";
 
 export default function BookingSummary({
   checkIn,
@@ -8,8 +9,11 @@ export default function BookingSummary({
   pricePerNight,
   venueId,
   guests = 1,
+  bookings = [],
   venueName,
+  refetchBookings, // ✅ Add refetch function from useVenueBookings
 }) {
+  console.log("🧾 BookingSummary sees:", { checkIn, checkOut });
   const [nights, setNights] = useState(0);
   const navigate = useNavigate();
   const { token } = useAuthStore();
@@ -23,11 +27,26 @@ export default function BookingSummary({
     } else {
       setNights(0);
     }
+    console.log(checkIn, checkOut);
   }, [checkIn, checkOut]);
 
   const total = nights * pricePerNight;
 
   const handleReserve = async () => {
+    if (!checkIn || !checkOut || !venueId || !guests || guests < 1) {
+      alert("Please make sure all booking details are valid.");
+      return;
+    }
+
+    const payload = {
+      dateFrom: new Date(checkIn).toISOString(),
+      dateTo: new Date(checkOut).toISOString(),
+      guests: Number(guests),
+      venueId,
+    };
+
+    console.log("📦 Booking payload:", payload);
+
     try {
       const res = await fetch("https://v2.api.noroff.dev/holidaze/bookings", {
         method: "POST",
@@ -36,15 +55,23 @@ export default function BookingSummary({
           "Content-Type": "application/json",
           "X-Noroff-API-Key": API_KEY,
         },
-        body: JSON.stringify({
-          dateFrom: checkIn,
-          dateTo: checkOut,
-          guests: guests || 1,
-          venueId,
-        }),
+        body: JSON.stringify(payload),
       });
 
-      if (!res.ok) throw new Error("Booking failed");
+      console.log("📡 Response status:", res.status);
+      const data = await res.json();
+      console.log("📬 API response:", data);
+
+      if (!res.ok) {
+        const message =
+          data?.errors?.[0]?.message || "Booking failed. Please try again.";
+        alert(message);
+        return;
+      }
+
+      if (typeof refetchBookings === "function") {
+        await refetchBookings();
+      }
 
       navigate("/confirmation", {
         state: {
@@ -57,10 +84,17 @@ export default function BookingSummary({
         },
       });
     } catch (err) {
-      console.error(err);
+      console.error("❌ Booking error:", err);
       alert("Booking failed. Please try again.");
     }
   };
+
+  const displayCheckIn = checkIn
+    ? format(new Date(checkIn), "dd.MM.yyyy")
+    : "—";
+  const displayCheckOut = checkOut
+    ? format(new Date(checkOut), "dd.MM.yyyy")
+    : "—";
 
   return (
     <div className="bg-white shadow p-4 rounded space-y-2 mt-6 font-inter">
@@ -69,10 +103,10 @@ export default function BookingSummary({
         Guests: <strong>{guests}</strong>
       </p>
       <p>
-        Check-in: <strong>{checkIn || "—"}</strong>
+        Check-in: <strong>{displayCheckIn}</strong>
       </p>
       <p>
-        Check-out: <strong>{checkOut || "—"}</strong>
+        Check-out: <strong>{displayCheckOut}</strong>
       </p>
       <p>
         Nights: <strong>{nights}</strong>

@@ -12,12 +12,12 @@ import ProfilePage from "./pages/ProfilePage";
 import BookingConfirmation from "./pages/BookingConfirmationPage/index.jsx";
 import MyTripsPage from "./pages/MyTripsPage/index.jsx";
 import MyVenuesPage from "./pages/MyVenuesPage/index.jsx";
-import MyGuestsPage from "./pages/MyGuestsPage/index.jsx";
 import CreateVenuePage from "./pages/CreateVenuePage/index.jsx";
 import EditVenuePage from "./pages/EditVenuePage/index.jsx";
+import VenueBookingsPage from "./pages/VenuesBookingPage/index.jsx";
 
 // Layout
-import Layout from "./components/Layout";
+import Layout from "./components/Shared/Layout.jsx";
 
 // External CSS (Slick carousel)
 import "slick-carousel/slick/slick.css";
@@ -36,9 +36,12 @@ const router = createBrowserRouter([
       { path: "confirmation", element: <BookingConfirmation /> },
       { path: "trips", element: <MyTripsPage /> },
       { path: "venues", element: <MyVenuesPage /> },
-      { path: "guests", element: <MyGuestsPage /> },
       { path: "venues/create", element: <CreateVenuePage /> },
-      { path: "venues/edit", element: <EditVenuePage /> },
+      { path: "venues/edit/:id", element: <EditVenuePage /> },
+      {
+        path: "venues/:id/bookings",
+        element: <VenueBookingsPage />,
+      },
     ],
   },
 ]);

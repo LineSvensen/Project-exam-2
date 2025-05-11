@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import useAuthStore from "../stores/authStore";
+import useAuthStore from "../../stores/authStore";
 import Avatar from "./Avatar";
-import logo from "../assets/holidaze-logo-bg.png";
+import logo from "../../assets/holidaze-logo-bg.png";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { FaUserCircle } from "react-icons/fa";
+import useFilterStore from "../../stores/filterStore";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const resetAll = useFilterStore((state) => state.resetAll);
   const { user, logout } = useAuthStore();
   const navigate = useNavigate();
 
@@ -27,22 +29,25 @@ export default function Header() {
   return (
     <header className="p-4 bg-white shadow relative z-50">
       <div className="max-w-6xl xl:px-8 mx-auto flex justify-between items-center px-4">
-        <Link to="/">
+        <Link to="/" onClick={resetAll}>
           <img src={logo} className="max-h-14" alt="Holidaze logo" />
         </Link>
 
         <div className="hidden md:flex items-center space-x-6">
-          <Link to="/" className="hover:underline">
+          <Link to="/" onClick={resetAll} className="hover:underline">
             Home
           </Link>
 
           <Link to="/favourites" className="hover:underline">
-            <span className="text-xl">
+            <span className="text-xl cursor-pointer">
               <FaRegHeart />
             </span>
           </Link>
 
-          <button onClick={handleProfileClick} className="focus:outline-none">
+          <button
+            onClick={handleProfileClick}
+            className="focus:outline-none cursor-pointer"
+          >
             {user ? (
               <Avatar url={user.avatar?.url} size="w-8 h-8" />
             ) : (
@@ -53,7 +58,7 @@ export default function Header() {
           {user && (
             <button
               onClick={handleLogout}
-              className="text-black hover:underline"
+              className="text-black hover:underline cursor-pointer"
             >
               Logout
             </button>

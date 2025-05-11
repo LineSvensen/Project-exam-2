@@ -1,8 +1,8 @@
 // src/components/FavouriteButton.jsx
 import { useState, useEffect } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import useAuthStore from "../stores/authStore";
-import useFavouritesStore from "../stores/favouritesStore";
+import useAuthStore from "../../stores/authStore";
+import useFavouritesStore from "../../stores/favouritesStore";
 
 export default function FavouriteButton({ venue, className = "" }) {
   const { user } = useAuthStore();

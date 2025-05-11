@@ -1,15 +1,20 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
-import FavouriteButton from "../FavouritesButton"; // adjust path if needed
+import FavouriteButton from "../Buttons/FavouritesButton";
 
 export default function VenueCard({ venue }) {
+  const location = useLocation();
+
+  const handleClick = () => {
+    sessionStorage.setItem("scrollY", window.scrollY); // ✅ Save scroll position
+  };
+
   const imageUrl = venue.media?.[0]?.url;
   const isValidImage = imageUrl && imageUrl.startsWith("http");
 
   return (
-    <Link to={`/venue/${venue.id}`}>
+    <Link to={`/venue/${venue.id}`} onClick={handleClick}>
       <div className="bg-white shadow-md rounded hover:shadow-lg transition overflow-hidden">
-        {/* Image wrapper with heart */}
         <div className="relative h-48 w-full">
           <img
             src={isValidImage ? imageUrl : "/fallback.jpg"}

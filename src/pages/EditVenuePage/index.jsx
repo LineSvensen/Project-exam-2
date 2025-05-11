@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useAuthStore from "../../stores/authStore";
+import useVenueTagStore from "../../stores/venueTagStore"; // ✅ Add this
 
 const API_BASE = import.meta.env.VITE_API_BASE;
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -9,6 +10,8 @@ export default function EditVenuePage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user, token } = useAuthStore();
+
+  const { setTagsForVenue, getTagsForVenue } = useVenueTagStore(); // ✅ Use tag store
 
   const [form, setForm] = useState({
     name: "",
@@ -29,6 +32,7 @@ export default function EditVenuePage() {
       country: "",
       continent: "",
     },
+    tags: "",
   });
 
   const [loading, setLoading] = useState(true);
@@ -38,11 +42,13 @@ export default function EditVenuePage() {
   useEffect(() => {
     async function fetchVenue() {
       try {
-        const res = await fetch(`${API_BASE}/holidaze/venues/${id}`);
+        const res = await fetch(`${API_BASE}/venues/${id}`);
         const data = await res.json();
         if (!res.ok) throw new Error("Failed to load venue");
 
         const venue = data.data;
+        const existingTags = getTagsForVenue(venue.id).join(", ");
+
         setForm({
           name: venue.name || "",
           description: venue.description || "",
@@ -51,6 +57,7 @@ export default function EditVenuePage() {
           maxGuests: venue.maxGuests || 1,
           meta: venue.meta || {},
           location: venue.location || {},
+          tags: existingTags,
         });
       } catch (err) {
         setError(err.message);
@@ -58,6 +65,7 @@ export default function EditVenuePage() {
         setLoading(false);
       }
     }
+
     fetchVenue();
   }, [id]);
 
@@ -92,17 +100,44 @@ export default function EditVenuePage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const cleanedMedia = form.media
+      .filter((url) => url.trim() !== "")
+      .map((url) => ({ url }));
+
+    const cleanedLocation = {
+      ...form.location,
+      lat: Number(form.location.lat) || 0,
+      lng: Number(form.location.lng) || 0,
+    };
+
+    const payload = {
+      ...form,
+      media: cleanedMedia,
+      location: cleanedLocation,
+    };
+
     try {
-      const res = await fetch(`${API_BASE}/holidaze/venues/${id}`, {
+      const res = await fetch(`${API_BASE}/venues/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
+          "X-Noroff-API-Key": API_KEY,
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify(payload),
       });
 
       if (!res.ok) throw new Error("Failed to update venue");
+
+      // ✅ Save tags locally
+      const cleanedTags = form.tags
+        .split(",")
+        .map((t) => t.trim())
+        .filter(Boolean);
+
+      setTagsForVenue(id, cleanedTags);
+
       navigate("/venues");
     } catch (err) {
       alert(err.message);
@@ -111,7 +146,7 @@ export default function EditVenuePage() {
 
   const handleDelete = async () => {
     try {
-      const res = await fetch(`${API_BASE}/holidaze/venues/${id}`, {
+      const res = await fetch(`${API_BASE}/venues/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -184,7 +219,7 @@ export default function EditVenuePage() {
           + Add another image
         </button>
 
-        <h2 className="font-semibold mt-4">Amenities</h2>
+        <h2 className="font-semibold mt-4">This venue offers:</h2>
         {Object.keys(form.meta).map((key) => (
           <label key={key} className="block">
             <input
@@ -208,6 +243,15 @@ export default function EditVenuePage() {
             placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
           />
         ))}
+
+        <h2 className="font-semibold">Tags (comma separated):</h2>
+        <input
+          name="tags"
+          value={form.tags}
+          onChange={handleChange}
+          className="w-full p-2 border rounded"
+          placeholder="e.g. cabin, wow, mountain"
+        />
 
         <div className="flex gap-4 mt-6">
           <button

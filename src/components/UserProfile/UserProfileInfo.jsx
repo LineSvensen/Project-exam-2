@@ -1,26 +1,34 @@
-import Avatar from "../Avatar";
+import Avatar from "../Shared/Avatar";
+import { useProfile } from "../../hooks/useProfile";
 
 export default function UserProfileInfo({ user }) {
+  const { profile, loading, error } = useProfile();
+  const hasVenues = profile?._count?.venues > 0;
+  const isRegisteredVenueManager = profile?.venueManager;
+
+  if (loading) return <p className="p-4">Loading profile info...</p>;
+  if (error) return <p className="text-red-500 p-4">{error}</p>;
+  if (!profile) return null;
+
   return (
     <div className="bg-white shadow rounded p-4">
-      <Avatar url={user.avatar?.url} size="w-28 h-28" />
-      <h2 className="text-xl font-semibold mb-2">{user.name}</h2>
-      <p className="text-gray-600 mb-2">{user.email}</p>
+      <Avatar url={profile.avatar?.url} size="w-28 h-28" />
+      <h2 className="text-xl font-semibold mb-2">{profile.name}</h2>
+      <p className="text-gray-600 mb-2">{profile.email}</p>
 
-      <div className="mt-4  space-y-1 text-sm">
+      <div className="mt-4 space-y-1 text-sm">
         <p>
           <strong>Bio:</strong>{" "}
-          {user.bio || <span className="text-gray-500">Not provided</span>}
+          {profile.bio || <span className="text-gray-500">Not provided</span>}
         </p>
 
-        <p>
-          <strong>Venue Manager:</strong>{" "}
-          {user.venueManager ? (
-            "Yes"
-          ) : (
-            <span className="text-gray-500">No</span>
-          )}
-        </p>
+        {(isRegisteredVenueManager || hasVenues) && (
+          <p>
+            <strong>Venue Manager</strong> — managing{" "}
+            <strong>{profile._count?.venues || 0}</strong>{" "}
+            {profile._count?.venues === 1 ? "venue" : "venues"}.
+          </p>
+        )}
       </div>
     </div>
   );
