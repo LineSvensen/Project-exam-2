@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import FavouriteButton from "../Buttons/FavouritesButton";
+import fallbackImg from "../../assets/fallback-img-x.png"; // Adjust path as needed
 
 export default function VenueCard({ venue }) {
   const location = useLocation();
@@ -17,9 +18,10 @@ export default function VenueCard({ venue }) {
       <div className="bg-white shadow-md rounded hover:shadow-lg transition overflow-hidden">
         <div className="relative h-48 w-full">
           <img
-            src={isValidImage ? imageUrl : "/fallback.jpg"}
+            src={isValidImage ? imageUrl : fallbackImg}
             alt={venue.media?.[0]?.alt || venue.name}
-            className="h-full w-full object-cover"
+            onError={(e) => (e.target.src = fallbackImg)}
+            className="h-48 w-full object-cover"
           />
           <div className="absolute top-2 right-2 z-10">
             <FavouriteButton venue={venue} />

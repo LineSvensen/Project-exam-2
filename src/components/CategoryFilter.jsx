@@ -9,13 +9,28 @@ import culturalIcon from "../assets/cultural.png";
 import { FiPlus } from "react-icons/fi"; // Feather Icons (clean + professional)
 
 const categories = [
-  { label: "Cabin", keyword: ["cabin"], icon: cabinIcon },
-  { label: "Modern", keyword: ["modern+luxury"], icon: modernIcon },
+  { label: "Cabin", keyword: ["cabin", "treehut"], icon: cabinIcon },
+  { label: "Modern", keyword: ["los angeles", "mansion"], icon: modernIcon },
   { label: "Beach", keyword: ["beach"], icon: beachIcon },
   { label: "Pool", keyword: ["pool"], icon: poolIcon },
-  { label: "Castle", keyword: ["castle"], icon: castleIcon },
-  { label: "Wow", keyword: ["wow"], icon: wowIcon },
-  { label: "Cultural", keyword: ["cultural"], icon: culturalIcon },
+  { label: "Castle", keyword: ["castle", "hogwarts"], icon: castleIcon },
+  {
+    label: "Wow",
+    keyword: ["wow", "crazy", "magic", "igloo", "treehut"],
+    icon: wowIcon,
+  },
+  {
+    label: "Cultural",
+    keyword: [
+      "cultural",
+      "japanese",
+      "indian",
+      "norwegian",
+      "tradition",
+      "chinese",
+    ],
+    icon: culturalIcon,
+  },
 ];
 
 export default function CategoryFilter({ onSelect }) {
