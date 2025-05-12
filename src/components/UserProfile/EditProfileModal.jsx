@@ -81,7 +81,7 @@ export default function EditProfileModal({ onClose }) {
               value={form.bio}
               onChange={handleChange}
               placeholder="Short bio..."
-              className="w-full h-42 border p-2 rounded"
+              className="w-full h-52 border p-2 rounded"
             />
           </label>
 

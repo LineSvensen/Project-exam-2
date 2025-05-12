@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { format } from "date-fns";
+import "../../calendar.css";
 
 import {
   addDays,
@@ -69,38 +70,40 @@ export default function BookingCalendar({ bookings = [], onSelectDates }) {
   };
 
   return (
-    <div className="bg-white shadow p-4 rounded space-y-4">
-      <h3 className="font-semibold">Choose your stay</h3>
+    <div className="bg-white shadow-lg p-6 rounded-md space-y-6 border border-gray-200">
+      <h3 className="text-xl font-bold">Choose your stay</h3>
 
-      <label className="text-sm block">
+      <label className="text-sm font-medium">
         Guests:
         <input
           type="number"
           min="1"
           value={guests}
           onChange={(e) => setGuests(Number(e.target.value))}
-          className="border p-2 rounded w-full mt-1"
+          className="shadow-md mt-1 ml-4 p-2 rounded border border-gray-00 w-64 mb-4"
         />
       </label>
 
-      <DayPicker
-        mode="range"
-        selected={range}
-        onSelect={handleRangeSelect}
-        fromDate={new Date()}
-        disabled={(date) =>
-          bookedNights.some((booked) => isSameDay(booked, date))
-        }
-        numberOfMonths={2}
-        className="border rounded"
-      />
+      <div className="flex justify-center">
+        <DayPicker
+          mode="range"
+          selected={range}
+          onSelect={handleRangeSelect}
+          fromDate={new Date()}
+          disabled={(date) =>
+            bookedNights.some((booked) => isSameDay(booked, date))
+          }
+          numberOfMonths={2}
+          className="mx-auto rdp"
+        />
+      </div>
 
       {error && <p className="text-red-500 text-sm">{error}</p>}
 
       <button
         onClick={handleConfirm}
         disabled={!range?.from || !range?.to}
-        className="bg-black text-white py-2 px-4 rounded hover:bg-gray-800 w-full"
+        className="button-secondary"
       >
         Choose dates
       </button>

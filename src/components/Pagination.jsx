@@ -28,7 +28,7 @@ export default function Pagination({
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="w-8 h-8 border rounded disabled:opacity-50"
+        className="w-8 h-8 border rounded disabled:opacity-50 cursor-pointer"
       >
         &lt;
       </button>
@@ -37,11 +37,13 @@ export default function Pagination({
         <>
           <button
             onClick={() => onPageChange(1)}
-            className="w-8 h-8 border rounded"
+            className="w-8 h-8 border rounded cursor-pointer"
           >
             1
           </button>
-          {startPage > 2 && <span className="w-8 h-8 text-center">…</span>}
+          {startPage > 2 && (
+            <span className="w-8 h-8 text-center cursor-pointer">…</span>
+          )}
         </>
       )}
 
@@ -49,8 +51,10 @@ export default function Pagination({
         <button
           key={page}
           onClick={() => onPageChange(page)}
-          className={`w-8 h-8 border rounded ${
-            page === currentPage ? "bg-gray-300 font-semibold" : ""
+          className={`w-8 h-8 border rounded cursor-pointer ${
+            page === currentPage
+              ? "bg-gray-300 font-semibold cursor-pointer"
+              : ""
           }`}
         >
           {page}
@@ -64,7 +68,7 @@ export default function Pagination({
           )}
           <button
             onClick={() => onPageChange(totalPages)}
-            className="w-8 h-8 border rounded"
+            className="w-8 h-8 border rounded cursor-pointer"
           >
             {totalPages}
           </button>
@@ -74,7 +78,7 @@ export default function Pagination({
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="w-8 h-8 border rounded disabled:opacity-50"
+        className="w-8 h-8 border rounded disabled:opacity-50 cursor-pointer"
       >
         &gt;
       </button>

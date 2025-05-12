@@ -3,12 +3,12 @@ import { create } from "zustand";
 
 const useFilterStore = create((set) => ({
   category: [],
-  sort: "",
+  sort: "featured",
   search: "",
   resetAll: () =>
     set({
       category: [],
-      sort: "",
+      sort: "featured",
       search: "",
     }),
   setCategory: (category) => set({ category }),

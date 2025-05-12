@@ -10,6 +10,7 @@ import { matchesCategory } from "../../utils/categoryMatcher";
 import useVenueStore from "../../stores/venueStore";
 import { useSearchParams } from "react-router-dom";
 import useFilterStore from "../../stores/filterStore";
+import { FEATURED_IDS } from "../../utils/featured";
 
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -25,8 +26,14 @@ export default function Home() {
     searchVenues,
   } = useVenueSearch();
 
-  const { category, sort, search, setCategory, setSort, setSearch } =
-    useFilterStore();
+  const {
+    category,
+    sort = "featured",
+    search,
+    setCategory,
+    setSort,
+    setSearch,
+  } = useFilterStore();
 
   const isSearching = !!search && results.length > 0;
   const rawVenues = isSearching ? results : allVenues;
@@ -97,8 +104,12 @@ export default function Home() {
         return b.price - a.price;
       case "rating-high":
         return (b.rating || 0) - (a.rating || 0);
+      case "featured":
+        const aIndex = FEATURED_IDS.indexOf(a.id);
+        const bIndex = FEATURED_IDS.indexOf(b.id);
+        return (aIndex === -1 ? 999 : aIndex) - (bIndex === -1 ? 999 : bIndex);
       default:
-        return new Date(b.created) - new Date(a.created); // ✅ Default: newest first
+        return new Date(b.created) - new Date(a.created);
     }
   });
 

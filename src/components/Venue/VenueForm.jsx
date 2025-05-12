@@ -146,7 +146,11 @@ export default function VenueForm({ mode = "create", initialData = {} }) {
           placeholder="Image URL"
         />
       ))}
-      <button type="button" onClick={addMediaField} className="text-blue-500">
+      <button
+        type="button"
+        onClick={addMediaField}
+        className="button-secondary"
+      >
         + Add another image
       </button>
 
@@ -175,10 +179,7 @@ export default function VenueForm({ mode = "create", initialData = {} }) {
         />
       ))}
 
-      <button
-        type="submit"
-        className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
-      >
+      <button type="submit" className="button-primary">
         {mode === "edit" ? "Update Venue" : "Create Venue"}
       </button>
     </form>

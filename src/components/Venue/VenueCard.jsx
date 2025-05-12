@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import FavouriteButton from "../Buttons/FavouritesButton";
 import fallbackImg from "../../assets/fallback-img-x.png"; // Adjust path as needed
+import { FEATURED_IDS } from "../../utils/featured";
 
 export default function VenueCard({ venue }) {
   const location = useLocation();
@@ -26,6 +27,13 @@ export default function VenueCard({ venue }) {
           <div className="absolute top-2 right-2 z-10">
             <FavouriteButton venue={venue} />
           </div>
+          <div className="absolute top-1 left-1 z-10">
+            {FEATURED_IDS.includes(venue.id) && (
+              <span className="flex w-16 text-center ml-4 mt-2 text-xs bg-gray-950/70 text-white font-bold px-2 py-1 rounded">
+                Featured
+              </span>
+            )}
+          </div>
         </div>
 
         <div className="p-4">
@@ -34,16 +42,7 @@ export default function VenueCard({ venue }) {
             {venue.location?.city || "Unknown"},{" "}
             {venue.location?.country || "Unknown"}
           </p>
-          <p className="text-sm font-bold">{venue.price} kr / night</p>
-
-          {venue.rating > 0 ? (
-            <div className="flex items-center text-yellow-500 text-sm mt-1">
-              <FaStar className="mr-1" />
-              {venue.rating.toFixed(1)} / 5
-            </div>
-          ) : (
-            <p className="text-sm text-gray-500 mt-1 italic">No reviews yet</p>
-          )}
+          <p className="text-sm font-bold">{venue.price} $ / night</p>
         </div>
       </div>
     </Link>

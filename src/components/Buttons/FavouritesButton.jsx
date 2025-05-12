@@ -34,7 +34,7 @@ export default function FavouriteButton({ venue, className = "" }) {
     <div className={`relative ${className}`}>
       <button
         onClick={toggleFavourite}
-        className="p-2 bg-white/70 rounded shadow text-black hover:text-gray-700 transition"
+        className="p-2 bg-white/70 rounded shadow text-black hover:text-gray-700 transition cursor-pointer"
         title={isFavourite ? "Remove from favourites" : "Add to favourites"}
       >
         {isFavourite ? <FaHeart /> : <FaRegHeart />}

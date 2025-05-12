@@ -21,10 +21,107 @@
 .button-primary {
   background-color: var(--primary-red);
   color: var(--neutral-white);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  justify-items: center;
 }
 
 .button-primary:hover {
   background-color: var(--primary-red-dark);
+}
+
+.button-secondary {
+  background-color: var(--secondary-teal);
+  color: var(--color-white);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+}
+
+.button-secondary:hover {
+  background-color: var(--secondary-teal-dark);
+}
+
+.button-destructive {
+  background-color: var(--neutral-white);
+  color: var(--primary-red);
+  border: 1px solid var(--primary-red);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+}
+
+.button-destructive:hover {
+  background-color: var(--neutral-white);
+  color: var(--primary-red-dark);
+  border: 1px solid var(--primary-red-dark);
+}
+
+.button-cancel-ignore {
+  background-color: var(--neutral-grey-medium);
+  color: var(--neutral-white);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+}
+
+.button-cancel-ignore:hover {
+  background-color: var(--neutral-grey-dark);
+}
+
+.button-descret {
+  background-color: var(--color-white);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+}
+
+.button-descret:hover {
+  background-color: var(--neutral-grey-light);
+}
+
+.warning-text {
+  color: var(--primary-red);
 }
 
 .custom-swiper .swiper-button-next,

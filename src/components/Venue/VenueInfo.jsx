@@ -5,6 +5,7 @@ import parkingImg from "../../assets/parking.png";
 import wifiImg from "../../assets/wifi.png";
 import Avatar from "../Shared/Avatar";
 
+
 export default function VenueInfo({ venue }) {
   const [showFullDesc, setShowFullDesc] = useState(false);
 
@@ -21,13 +22,6 @@ export default function VenueInfo({ venue }) {
             <h1 className="text-2xl font-bold font-poppins tracking-wide mb-4 truncate">
               {venue.name}
             </h1>
-            {venue.rating > 0 && (
-              <p className="text-sm text-yellow-600 font-medium">
-                Rating:{" "}
-                <span className="font-semibold">{venue.rating.toFixed(1)}</span>{" "}
-                / 5
-              </p>
-            )}
           </div>
           <p>
             {venue.location?.city || "Unknown"},{" "}

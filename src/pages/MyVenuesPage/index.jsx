@@ -17,10 +17,7 @@ export default function MyVenuesPage() {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">My Venues</h1>
         {!noVenues && (
-          <Link
-            to="/venues/create"
-            className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
-          >
+          <Link to="/venues/create" className="button-primary">
             + Create Venue
           </Link>
         )}
@@ -29,10 +26,7 @@ export default function MyVenuesPage() {
       {noVenues ? (
         <div className="flex flex-col items-center justify-center text-center text-gray-600 mt-20">
           <p className="mb-4 text-lg">You haven't listed any venues yet.</p>
-          <Link
-            to="/venues/create"
-            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-          >
+          <Link to="/venues/create" className="button-primary">
             + Create your first venue
           </Link>
         </div>

@@ -4,7 +4,7 @@ import { useVenue } from "../../hooks/useSingleVenue";
 import { useVenueBookings } from "../../hooks/useVenueBookings";
 import ImageGallery from "../../components/Venue/VenueImageGallery";
 import VenueInfo from "../../components/Venue/VenueInfo";
-import VenueReviews from "../../components/Venue/VenueReviews";
+
 import BookingCalendar from "../../components/Booking/BookingCalendar";
 import BookingSummary from "../../components/Booking/BookingSummary";
 import useAuthStore from "../../stores/authStore";
@@ -52,7 +52,7 @@ export default function SinglePage() {
       <div className="mt-6">
         <VenueInfo venue={venue} />
       </div>
-      <VenueReviews venueId={venue.id} />
+
       <div className="flex flex-col md:flex-row md:space-x-4 w-full">
         {isOwner ? (
           <div className="text-center w-full bg-yellow-100 p-4 rounded mt-4">
@@ -62,7 +62,7 @@ export default function SinglePage() {
           </div>
         ) : (
           <>
-            <div className="w-full md:w-2/3">
+            <div className="w-full md:w-2/3 mt-4">
               <BookingCalendar
                 bookings={bookings}
                 onSelectDates={setSelectedDates}

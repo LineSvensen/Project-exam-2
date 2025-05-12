@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../../stores/authStore";
 import UserProfileInfo from "../../components/UserProfile/UserProfileInfo";
-import CompleteProfileWarning from "../../components/UserProfile/CompleteProfileWarning";
 import EditProfileModal from "../../components/UserProfile/EditProfileModal";
 
 import tripIcon from "../../assets/trip-icon.png";
@@ -37,20 +36,12 @@ export default function ProfilePage() {
     <div className="max-w-4xl mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">My Profile</h1>
-        <button
-          onClick={() => setShowEdit(true)}
-          className="bg-gray-100 px-4 py-2 rounded cursor-pointer hover:bg-gray-200"
-        >
+        <button onClick={() => setShowEdit(true)} className="button-descret">
           Edit Profile
         </button>
       </div>
 
       <UserProfileInfo user={user} />
-
-      <CompleteProfileWarning
-        isComplete={isProfileComplete}
-        onCompleteClick={() => setShowEdit(true)}
-      />
 
       <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
         <a

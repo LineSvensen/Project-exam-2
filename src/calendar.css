@@ -1,0 +1,62 @@
+/* calendar.css */
+.rdp {
+  --rdp-cell-size: 42px;
+  --rdp-accent-color: #2f7f88; /* emerald-500 */
+  --rdp-background-color: #f0fdf4; /* light green bg */
+  font-family: "Inter", sans-serif;
+}
+
+.rdp-month {
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.rdp-day {
+  transition: all 0.2s ease;
+  border-radius: 8px;
+}
+
+.rdp-day:hover {
+  background-color: #d1fae5; /* emerald-100 */
+}
+
+.rdp-day_selected,
+.rdp-day_selected:focus,
+.rdp-day_selected:hover {
+  background-color: #2f7f88 !important;
+  color: white !important;
+}
+
+.rdp-day_disabled {
+  color: #9ca3af !important;
+  background-color: #b0b4bb;
+  text-decoration: line-through;
+  pointer-events: none;
+}
+
+.rdp-caption {
+  font-weight: 600;
+  color: #111827; /* gray-900 */
+}
+
+.rdp-head_cell {
+  color: #6b7280; /* gray-500 */
+  font-size: 0.875rem;
+}
+
+/* Style the month navigation arrows */
+.rdp-nav_button {
+  background-color: transparent;
+  color: #2f7f88;
+  font-size: 1.25rem;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.rdp-nav_button:hover {
+  background-color: #ecfdf5; /* light green hover */
+  color: #2f7f88;
+}

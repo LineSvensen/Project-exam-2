@@ -254,16 +254,22 @@ export default function EditVenuePage() {
         />
 
         <div className="flex gap-4 mt-6">
-          <button
-            type="submit"
-            className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
-          >
+          <button type="submit" className="button-primary">
             Update Venue
           </button>
+
+          <button
+            type="button"
+            onClick={() => navigate("/venues")}
+            className="button-cancel-ignore"
+          >
+            Cancel
+          </button>
+
           <button
             type="button"
             onClick={() => setShowConfirmDelete(true)}
-            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+            className="button-descructive"
           >
             Delete Venue
           </button>
