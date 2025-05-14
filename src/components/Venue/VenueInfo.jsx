@@ -5,7 +5,6 @@ import parkingImg from "../../assets/parking.png";
 import wifiImg from "../../assets/wifi.png";
 import Avatar from "../Shared/Avatar";
 
-
 export default function VenueInfo({ venue }) {
   const [showFullDesc, setShowFullDesc] = useState(false);
 
@@ -58,46 +57,51 @@ export default function VenueInfo({ venue }) {
             </p>
 
             {/* full text. desktop. */}
-            <p className="text-gray-700 hidden md:block truncate">
-              {description}
-            </p>
+            <p className="text-gray-700 hidden md:block ">{description}</p>
           </div>
-
-          <h3 className="font-bold mb-2">This place offers:</h3>
-          <div className="flex flex-wrap items-start gap-4 text-sm py-2">
-            {meta?.wifi && (
-              <div className="flex flex-col items-center w-24 text-center">
-                <img src={wifiImg} className="w-8 h-8 mb-1" alt="Wifi" />
-                <span>Wifi</span>
+          {(meta?.wifi || meta?.parking || meta?.breakfast || meta?.pets) && (
+            <>
+              <h3 className="font-bold mb-2">This place offers:</h3>
+              <div className="flex flex-wrap items-start gap-4 text-sm py-2">
+                {meta?.wifi && (
+                  <div className="flex flex-col items-center w-24 text-center">
+                    <img src={wifiImg} className="w-8 h-8 mb-1" alt="Wifi" />
+                    <span>Wifi</span>
+                  </div>
+                )}
+                {meta?.parking && (
+                  <div className="flex flex-col items-center w-24 text-center">
+                    <img
+                      src={parkingImg}
+                      className="w-8 h-8 mb-1"
+                      alt="Parking"
+                    />
+                    <span>Parking</span>
+                  </div>
+                )}
+                {meta?.breakfast && (
+                  <div className="flex flex-col items-center w-24 text-center">
+                    <img
+                      src={breakfastImg}
+                      className="w-8 h-8 mb-1"
+                      alt="Breakfast"
+                    />
+                    <span>Breakfast</span>
+                  </div>
+                )}
+                {meta?.pets && (
+                  <div className="flex flex-col items-center w-24 text-center">
+                    <img
+                      src={petsImg}
+                      className="w-8 h-8 mb-1"
+                      alt="Pets allowed"
+                    />
+                    <span>Pets allowed</span>
+                  </div>
+                )}
               </div>
-            )}
-            {meta?.parking && (
-              <div className="flex flex-col items-center w-24 text-center">
-                <img src={parkingImg} className="w-8 h-8 mb-1" alt="Parking" />
-                <span>Parking</span>
-              </div>
-            )}
-            {meta?.breakfast && (
-              <div className="flex flex-col items-center w-24 text-center">
-                <img
-                  src={breakfastImg}
-                  className="w-8 h-8 mb-1"
-                  alt="Breakfast"
-                />
-                <span>Breakfast</span>
-              </div>
-            )}
-            {meta?.pets && (
-              <div className="flex flex-col items-center w-24 text-center">
-                <img
-                  src={petsImg}
-                  className="w-8 h-8 mb-1"
-                  alt="Pets allowed"
-                />
-                <span>Pets allowed</span>
-              </div>
-            )}
-          </div>
+            </>
+          )}
 
           <h3 className="font-bold mt-4">Full address:</h3>
           <p className="text-sm text-gray-600 mt-2 mb-4">

@@ -1,14 +1,14 @@
 import { Link, useLocation } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import FavouriteButton from "../Buttons/FavouritesButton";
-import fallbackImg from "../../assets/fallback-img-x.png"; // Adjust path as needed
+import fallbackImg from "../../assets/fallback-img-x.png";
 import { FEATURED_IDS } from "../../utils/featured";
 
 export default function VenueCard({ venue }) {
   const location = useLocation();
 
   const handleClick = () => {
-    sessionStorage.setItem("scrollY", window.scrollY); // ✅ Save scroll position
+    sessionStorage.setItem("scrollY", window.scrollY);
   };
 
   const imageUrl = venue.media?.[0]?.url;
@@ -42,7 +42,7 @@ export default function VenueCard({ venue }) {
             {venue.location?.city || "Unknown"},{" "}
             {venue.location?.country || "Unknown"}
           </p>
-          <p className="text-sm font-bold">{venue.price} $ / night</p>
+          <p className="text-sm font-bold py-1">{venue.price} $ / night</p>
         </div>
       </div>
     </Link>

@@ -1,6 +1,6 @@
 import React from "react";
-
-export default function SortBy({ onChange }) {
+import useFilterStore from "../stores/filterStore"; // adjust path if needed
+export default function SortBy({ value, onChange }) {
   return (
     <div className="mb-6">
       <label htmlFor="sort" className="mr-2 font-medium">
@@ -8,6 +8,7 @@ export default function SortBy({ onChange }) {
       </label>
       <select
         id="sort"
+        value={value}
         onChange={(e) => onChange(e.target.value)}
         className="p-2 border rounded"
       >

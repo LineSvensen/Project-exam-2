@@ -6,6 +6,10 @@ export function matchesCategory(
   tags,
   keywords
 ) {
+  if (!Array.isArray(keywords) || keywords.length === 0) {
+    return false; // Prevents `.some()` on undefined or non-array
+  }
+
   const combined = [
     name,
     description,
@@ -13,7 +17,7 @@ export function matchesCategory(
     location?.city,
     location?.country,
     location?.continent,
-    (tags || []).join(" "),
+    Array.isArray(tags) ? tags.join(" ") : "",
     JSON.stringify(meta),
   ]
     .filter(Boolean)

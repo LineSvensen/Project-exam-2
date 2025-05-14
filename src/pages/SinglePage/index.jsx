@@ -11,10 +11,13 @@ import useAuthStore from "../../stores/authStore";
 import FavouriteButton from "../../components/Buttons/FavouritesButton";
 import useFavouritesStore from "../../stores/favouritesStore";
 
+import { useRef } from "react";
+
 export default function SinglePage() {
   const { id } = useParams();
   const { user } = useAuthStore();
   const { favourites, addFavourite, removeFavourite } = useFavouritesStore();
+  const summaryRef = useRef();
 
   const [selectedDates, setSelectedDates] = useState({
     checkIn: null,
@@ -32,7 +35,7 @@ export default function SinglePage() {
     loading: bookingsLoading,
     error: bookingsError,
     refetchBookings,
-  } = useVenueBookings(id); // ✅ pass the ID explicitly
+  } = useVenueBookings(id); 
 
   if (venueLoading || bookingsLoading) return <p>Loading venue...</p>;
   if (venueError || bookingsError)
@@ -70,6 +73,18 @@ export default function SinglePage() {
             </div>
 
             <div className="w-full md:w-1/3 mt-4 md:mt-0">
+              {/* <BookingSummary
+                checkIn={selectedDates.checkIn}
+                checkOut={selectedDates.checkOut}
+                pricePerNight={venue.price}
+                venueId={venue.id}
+                guests={selectedDates.guests}
+                bookings={bookings}
+                venueName={venue.name}
+                refetchBookings={refetchBookings}
+                ref={summaryRef}
+              /> */}
+
               <BookingSummary
                 checkIn={selectedDates.checkIn}
                 checkOut={selectedDates.checkOut}
@@ -79,6 +94,7 @@ export default function SinglePage() {
                 bookings={bookings}
                 venueName={venue.name}
                 refetchBookings={refetchBookings}
+                ref={summaryRef} // ✅ Pass ref here!
               />
             </div>
           </>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import useAuthStore from "../../stores/authStore";
 
-export default function EditProfileModal({ onClose }) {
+export default function EditProfileModal({ onClose, onUpdated }) {
   const { user, token, login } = useAuthStore();
 
   const API_KEY = import.meta.env.VITE_API_KEY;
@@ -25,7 +25,14 @@ export default function EditProfileModal({ onClose }) {
     setLoading(true);
     setError(null);
 
+    const payload = {
+      bio: form.bio,
+      avatar: form.avatar ? { url: form.avatar } : undefined,
+    };
+
     try {
+      console.log("Sending:", payload);
+
       const res = await fetch(
         `https://v2.api.noroff.dev/holidaze/profiles/${user.name}`,
         {
@@ -43,10 +50,14 @@ export default function EditProfileModal({ onClose }) {
       );
 
       const data = await res.json();
-      if (!res.ok)
+      console.log("Returned:", data);
+
+      if (!res.ok) {
         throw new Error(data.errors?.[0]?.message || "Failed to update");
+      }
 
       login(data.data, token);
+      onUpdated();
       onClose();
     } catch (err) {
       setError(err.message);

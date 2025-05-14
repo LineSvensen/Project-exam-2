@@ -25,16 +25,27 @@ export default function Header() {
     navigate(user ? "/profile" : "/login");
     setMenuOpen(false);
   };
+  const handleResetAndNavigateHome = () => {
+    resetAll(); // clear filters
+    setSort("featured");
+    sessionStorage.removeItem("scrollY");
+    navigate("/?page=1", { replace: true }); // go home & reset pagination
+    setMenuOpen(false);
+  };
 
   return (
     <header className="p-4 bg-white shadow relative z-50">
       <div className="max-w-6xl xl:px-8 mx-auto flex justify-between items-center px-4">
-        <Link to="/" onClick={resetAll}>
+        <Link to="/" onClick={handleResetAndNavigateHome}>
           <img src={logo} className="max-h-14" alt="Holidaze logo" />
         </Link>
 
         <div className="hidden md:flex items-center space-x-6">
-          <Link to="/" onClick={resetAll} className="hover:underline">
+          <Link
+            to="/"
+            onClick={handleResetAndNavigateHome}
+            className="hover:underline"
+          >
             Home
           </Link>
 

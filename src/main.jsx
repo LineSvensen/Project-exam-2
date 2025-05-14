@@ -19,7 +19,6 @@ import VenueBookingsPage from "./pages/VenuesBookingPage/index.jsx";
 // Layout
 import Layout from "./components/Shared/Layout.jsx";
 
-// External CSS (Slick carousel)
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -28,7 +27,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <Layout />,
     children: [
-      { index: true, element: <Home /> },
+      { index: true, element: <Home key={window.location.search} /> },
       { path: "venue/:id", element: <SinglePage /> },
       { path: "favourites", element: <FavouritesPage /> },
       { path: "profile", element: <ProfilePage /> },
@@ -38,10 +37,7 @@ const router = createBrowserRouter([
       { path: "venues", element: <MyVenuesPage /> },
       { path: "venues/create", element: <CreateVenuePage /> },
       { path: "venues/edit/:id", element: <EditVenuePage /> },
-      {
-        path: "venues/:id/bookings",
-        element: <VenueBookingsPage />,
-      },
+      { path: "venues/:id/bookings", element: <VenueBookingsPage /> },
     ],
   },
 ]);
@@ -51,3 +47,32 @@ createRoot(document.getElementById("root")).render(
     <RouterProvider router={router} />
   </React.StrictMode>
 );
+
+// const router = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <Layout />,
+//     children: [
+//       { index: true, element: <Home key={location.search} /> },
+//       { path: "venue/:id", element: <SinglePage /> },
+//       { path: "favourites", element: <FavouritesPage /> },
+//       { path: "profile", element: <ProfilePage /> },
+//       { path: "login", element: <LoginRegisterPage /> },
+//       { path: "confirmation", element: <BookingConfirmation /> },
+//       { path: "trips", element: <MyTripsPage /> },
+//       { path: "venues", element: <MyVenuesPage /> },
+//       { path: "venues/create", element: <CreateVenuePage /> },
+//       { path: "venues/edit/:id", element: <EditVenuePage /> },
+//       {
+//         path: "venues/:id/bookings",
+//         element: <VenueBookingsPage />,
+//       },
+//     ],
+//   },
+// ]);
+
+// createRoot(document.getElementById("root")).render(
+//   <React.StrictMode>
+//     <RouterProvider router={router} />
+//   </React.StrictMode>
+// );

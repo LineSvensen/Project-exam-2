@@ -4,14 +4,24 @@ import useAuthStore from "../../stores/authStore";
 import UserProfileInfo from "../../components/UserProfile/UserProfileInfo";
 import EditProfileModal from "../../components/UserProfile/EditProfileModal";
 
-import tripIcon from "../../assets/trip-icon.png";
-import venueIcon from "../../assets/venue-icon.png";
+import tripIcon from "../../assets/mytrips-icon-x.png";
+import venueIcon from "../../assets/myvenues-icon-x.png";
 
 export default function ProfilePage() {
   const { user, loadUserFromStorage } = useAuthStore();
   const [showEdit, setShowEdit] = useState(false);
   const [hasChecked, setHasChecked] = useState(false);
   const navigate = useNavigate();
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  useEffect(() => {
+    loadUserFromStorage();
+  }, [refreshKey]);
+
+  const handleProfileUpdated = () => {
+    setRefreshKey((prev) => prev + 1); // 👈 trigger re-load
+    setShowEdit(false); // close modal
+  };
 
   useEffect(() => {
     loadUserFromStorage();
@@ -39,28 +49,34 @@ export default function ProfilePage() {
         <button onClick={() => setShowEdit(true)} className="button-descret">
           Edit Profile
         </button>
+        {showEdit && <EditProfileModal onUpdated={handleProfileUpdated} />}
       </div>
 
-      <UserProfileInfo user={user} />
+      <UserProfileInfo user={user} key={refreshKey} />
 
-      <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+      <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6 text-center">
         <a
           href="/trips"
-          className="bg-white shadow rounded p-4 hover:bg-gray-100 transition flex flex-col items-center"
+          className="bg-white shadow rounded p-4 hover:bg-gray-100 transition flex flex-col items-center "
         >
           <img src={tripIcon} alt="My Trips" className="w-12 h-12 mb-2" />
-          <span className="font-semibold">My Trips</span>
+          <span className="">My Trips</span>
         </a>
         <a
           href="/venues"
           className="bg-white shadow rounded p-4 hover:bg-gray-100 transition flex flex-col items-center"
         >
           <img src={venueIcon} alt="My Venues" className="w-12 h-12 mb-2" />
-          <span className="font-semibold">My Venues</span>
+          <span className="">My Venues</span>
         </a>
       </div>
 
-      {showEdit && <EditProfileModal onClose={() => setShowEdit(false)} />}
+      {showEdit && (
+        <EditProfileModal
+          onClose={() => setShowEdit(false)}
+          onUpdated={handleProfileUpdated}
+        />
+      )}
     </div>
   );
 }

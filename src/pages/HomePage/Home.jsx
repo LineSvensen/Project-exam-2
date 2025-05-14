@@ -11,14 +11,15 @@ import useVenueStore from "../../stores/venueStore";
 import { useSearchParams } from "react-router-dom";
 import useFilterStore from "../../stores/filterStore";
 import { FEATURED_IDS } from "../../utils/featured";
+import HolidazeLoader from "../../components/Shared/Loaders/HolidazeLoader";
 
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
-  const itemsPerPage = 15;
+  const itemsPerPage = 42;
 
   const allVenues = useVenueStore((state) => state.allVenues);
-  const { venues, loading: loadingVenues, error: venuesError } = useVenues();
+  const { loading: loadingVenues, error: venuesError } = useVenues();
   const {
     results,
     loading: loadingSearch,
@@ -35,8 +36,16 @@ export default function Home() {
     setSearch,
   } = useFilterStore();
 
-  const isSearching = !!search && results.length > 0;
+  const isSearching = !!search && Array.isArray(results) && results.length > 0;
   const rawVenues = isSearching ? results : allVenues;
+
+  console.log("🏠 Home Page Debug:", {
+    search,
+    results,
+    allVenues,
+    isSearching,
+    category,
+  });
 
   const handlePageChange = (page) => {
     setSearchParams({ page: String(page) });
@@ -56,7 +65,7 @@ export default function Home() {
     setCategory([]); // clear category
     setSearchParams({ page: "1" });
 
-    if (sort) {
+    if (sort && sort !== "featured") {
       const [s, o] = sort.split("-");
       searchVenues(query, s, o);
     } else {
@@ -82,8 +91,13 @@ export default function Home() {
     }
   }, [rawVenues]);
 
-  const filteredVenues =
-    category.length > 0
+  useEffect(() => {
+    // Scroll + force evaluation when rawVenues, sort or category changes
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [sort, category, search, rawVenues]);
+
+  const filteredVenues = Array.isArray(rawVenues)
+    ? category.length > 0
       ? rawVenues.filter((venue) =>
           matchesCategory(
             venue.name,
@@ -94,7 +108,8 @@ export default function Home() {
             category
           )
         )
-      : rawVenues;
+      : rawVenues
+    : [];
 
   const sortedVenues = [...filteredVenues].sort((a, b) => {
     switch (sort) {
@@ -113,11 +128,17 @@ export default function Home() {
     }
   });
 
+  const totalItems = sortedVenues.length;
+
   const finalError = searchError || venuesError;
-  if (loadingVenues || loadingSearch)
-    return <div className="p-8">Loading...</div>;
+  if (loadingVenues || loadingSearch) return <HolidazeLoader />;
   if (finalError)
     return <div className="text-red-500 p-8">Error: {finalError}</div>;
+
+  const paginatedVenues = sortedVenues.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
@@ -129,27 +150,23 @@ export default function Home() {
       <CategoryFilter onSelect={handleCategorySelect} />
       <SortBy onChange={handleSortChange} />
 
-      {sortedVenues.length === 0 ? (
+      {paginatedVenues.length === 0 ? (
         <p className="text-center text-gray-500 mt-4">No venues found.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-          {sortedVenues
-            .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-            .map((venue) => (
-              <VenueCard key={venue.id} venue={venue} />
-            ))}
+          {paginatedVenues.map((venue) => (
+            <VenueCard key={venue.id} venue={venue} />
+          ))}
         </div>
       )}
 
       <div className="flex justify-center mt-8">
-        <div className="flex space-x-2 min-w-[320px] justify-center items-center">
-          <Pagination
-            currentPage={currentPage}
-            totalItems={sortedVenues.length}
-            itemsPerPage={itemsPerPage}
-            onPageChange={handlePageChange}
-          />
-        </div>
+        <Pagination
+          currentPage={currentPage}
+          totalItems={totalItems}
+          itemsPerPage={itemsPerPage}
+          onPageChange={handlePageChange}
+        />
       </div>
     </div>
   );
