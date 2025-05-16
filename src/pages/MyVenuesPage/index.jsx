@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import VenueCard from "../../components/Venue/VenueCard";
 import MyVenueCard from "../../components/Venue/MyVenueCard"; // instead of VenueCard
 import { useVenueBookings } from "../../hooks/useVenueBookings";
+import BackButton from "../../components/Buttons/BackButton";
 
 export default function MyVenuesPage() {
   const { venues, loading, error } = useUserVenues();
@@ -14,6 +15,7 @@ export default function MyVenuesPage() {
 
   return (
     <div className="max-w-6xl mx-auto p-4">
+      <BackButton />
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">My Venues</h1>
         {!noVenues && (

@@ -7,5 +7,8 @@ export const FEATURED_IDS = [
   "ff8fd936-3d7b-4e89-ac32-6b1438541147",
   "4036527c-352e-4d48-a765-a0d8c0faffc4",
   "08c7b4f4-0900-475a-89ac-dbdef48a03ff",
+  "bd936a12-b997-42b3-8833-0d845f65842a",
+  "192e3769-8fdd-4fac-8bcd-ba3dbaa23106",
+
   // Replace with real venue IDs from your data
 ];

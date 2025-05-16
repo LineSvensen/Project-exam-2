@@ -10,6 +10,7 @@ import BookingSummary from "../../components/Booking/BookingSummary";
 import useAuthStore from "../../stores/authStore";
 import FavouriteButton from "../../components/Buttons/FavouritesButton";
 import useFavouritesStore from "../../stores/favouritesStore";
+import BackButton from "../../components/Buttons/BackButton";
 
 import { useRef } from "react";
 
@@ -35,7 +36,7 @@ export default function SinglePage() {
     loading: bookingsLoading,
     error: bookingsError,
     refetchBookings,
-  } = useVenueBookings(id); 
+  } = useVenueBookings(id);
 
   if (venueLoading || bookingsLoading) return <p>Loading venue...</p>;
   if (venueError || bookingsError)
@@ -46,6 +47,7 @@ export default function SinglePage() {
 
   return (
     <div className="max-w-4xl mx-auto p-4">
+      <BackButton />
       <div className="relative">
         <div className="absolute top-4 right-4 z-10">
           <FavouriteButton venue={venue} />

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useVenue } from "../../hooks/useSingleVenue";
 import { useVenueBookings } from "../../hooks/useVenueBookings";
 import VenueCard from "../../components/Venue/VenueCard";
+import BackButton from "../../components/Buttons/BackButton";
 
 export default function VenueBookingsPage() {
   const { id } = useParams();
@@ -41,7 +42,10 @@ export default function VenueBookingsPage() {
 
   return (
     <div className="max-w-4xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Bookings for: {venue.name}</h1>
+      <BackButton />
+      <h1 className="text-2xl font-bold mb-4 mt-4">
+        Bookings for: {venue.name}
+      </h1>
       <VenueCard venue={venue} />
 
       <div className="mt-8">

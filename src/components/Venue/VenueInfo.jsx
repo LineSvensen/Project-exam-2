@@ -18,7 +18,7 @@ export default function VenueInfo({ venue }) {
       <div className="bg-white shadow p-4 rounded space-y-4 font-inter">
         <div>
           <div className="flex flex-row justify-between">
-            <h1 className="text-2xl font-bold font-poppins tracking-wide mb-4 truncate">
+            <h1 className="text-2xl font-bold font-poppins tracking-wide mb-4 truncate capitalize">
               {venue.name}
             </h1>
           </div>
@@ -57,7 +57,7 @@ export default function VenueInfo({ venue }) {
             </p>
 
             {/* full text. desktop. */}
-            <p className="text-gray-700 hidden md:block ">{description}</p>
+            <p className="text-gray-700 hidden md:block">{description}</p>
           </div>
           {(meta?.wifi || meta?.parking || meta?.breakfast || meta?.pets) && (
             <>

@@ -26,10 +26,10 @@ export default function Header() {
     setMenuOpen(false);
   };
   const handleResetAndNavigateHome = () => {
-    resetAll(); // clear filters
+    resetAll();
     setSort("featured");
     sessionStorage.removeItem("scrollY");
-    navigate("/?page=1", { replace: true }); // go home & reset pagination
+    navigate("/?page=1", { replace: true });
     setMenuOpen(false);
   };
 
@@ -44,12 +44,12 @@ export default function Header() {
           <Link
             to="/"
             onClick={handleResetAndNavigateHome}
-            className="hover:underline"
+            className=" font-poppins link-hover "
           >
-            Home
+            HOME
           </Link>
 
-          <Link to="/favourites" className="hover:underline">
+          <Link to="/favourites" className="link-hover ">
             <span className="text-xl cursor-pointer">
               <FaRegHeart />
             </span>
@@ -57,7 +57,7 @@ export default function Header() {
 
           <button
             onClick={handleProfileClick}
-            className="focus:outline-none cursor-pointer"
+            className="cursor-pointer link-hover "
           >
             {user ? (
               <Avatar url={user.avatar?.url} size="w-8 h-8" />
@@ -69,14 +69,14 @@ export default function Header() {
           {user && (
             <button
               onClick={handleLogout}
-              className="text-black hover:underline cursor-pointer"
+              className="text-black cursor-pointer font-poppins link-hover "
             >
-              Logout
+              LOG OUT
             </button>
           )}
         </div>
 
-        {/* Burger icon */}
+        {/* burger icon! */}
         <div className="md:hidden flex items-center space-x-4">
           <button onClick={handleProfileClick} aria-label="Profile">
             {user ? (
@@ -96,7 +96,7 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* mobile open Menu */}
       {menuOpen && (
         <div className="fixed inset-0 bg-teal-800 text-white flex flex-col items-start p-6 space-y-6 text-sm md:hidden">
           <button

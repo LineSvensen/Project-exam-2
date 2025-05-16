@@ -5,11 +5,11 @@ export default function SearchBar({ onSearch }) {
   const [query, setQuery] = useState("");
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    if (query.trim()) {
-      onSearch(query.trim());
-    }
-  };
+  e.preventDefault();
+  if (query.trim()) {
+    onSearch(query.trim());
+  }
+};
 
   return (
     <form onSubmit={handleSubmit} className="flex gap-2 mb-6">

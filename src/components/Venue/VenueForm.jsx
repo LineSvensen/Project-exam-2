@@ -148,7 +148,7 @@ export default function VenueForm({ mode = "create", initialData = {} }) {
         <p className="text-red-500 text-sm">{errors.description}</p>
       )}
 
-      <h2 className="font-semibold">Price:</h2>
+      <h2 className="font-semibold">$ Price:</h2>
       <input
         name="price"
         type="number"

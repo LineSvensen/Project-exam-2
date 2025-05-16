@@ -122,6 +122,11 @@
 
 .warning-text {
   color: var(--primary-red);
+  font-size: 16px;
+}
+
+.border-styled {
+  border: 1px solid var(--neutral-grey-dark);
 }
 
 .custom-swiper .swiper-button-next,
@@ -155,4 +160,25 @@
 }
 .custom-swiper .swiper-pagination-bullet-active {
   background-color: #ffffff;
+}
+
+.link-hover {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.link-hover::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background-color: var(--primary-red);
+  transition: width 0.3s ease-in-out;
+}
+
+.link-hover:hover::after {
+  width: 100%;
 }

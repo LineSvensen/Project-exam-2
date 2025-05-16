@@ -3,6 +3,7 @@ import useFavouritesStore from "../../stores/favouritesStore";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import VenueCard from "../../components/Venue/VenueCard";
+import BackButton from "../../components/Buttons/BackButton";
 
 export default function FavouritesPage() {
   const { user } = useAuthStore();
@@ -17,6 +18,7 @@ export default function FavouritesPage() {
   if (!user) {
     return (
       <div className="max-w-6xl mx-auto px-4 py-8 text-center">
+        <BackButton />
         <h1 className="text-2xl font-bold mb-4">Favourites</h1>
         <p className="text-gray-600 mb-4">
           You must be logged in to view and save favourites.

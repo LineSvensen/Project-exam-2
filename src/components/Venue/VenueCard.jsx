@@ -37,7 +37,9 @@ export default function VenueCard({ venue }) {
         </div>
 
         <div className="p-4">
-          <h2 className="text-lg font-semibold truncate">{venue.name}</h2>
+          <h2 className="text-lg font-semibold truncate capitalize">
+            {venue.name}
+          </h2>
           <p className="text-sm">
             {venue.location?.city || "Unknown"},{" "}
             {venue.location?.country || "Unknown"}
