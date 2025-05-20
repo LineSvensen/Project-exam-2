@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useAuthStore from "../../stores/authStore";
 import { format } from "date-fns";
 import ErrorMessage from "../Shared/ErrorMessage";
+import { eachDayOfInterval, parseISO, addDays } from "date-fns";
 
 const BookingSummary = forwardRef(function BookingSummary(
   {
@@ -25,9 +26,11 @@ const BookingSummary = forwardRef(function BookingSummary(
 
   useEffect(() => {
     if (checkIn && checkOut) {
-      const diffTime = Math.abs(new Date(checkOut) - new Date(checkIn));
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      setNights(diffDays);
+      const nightsArray = eachDayOfInterval({
+        start: new Date(checkIn),
+        end: addDays(new Date(checkOut), -1),
+      });
+      setNights(nightsArray.length);
     } else {
       setNights(0);
     }

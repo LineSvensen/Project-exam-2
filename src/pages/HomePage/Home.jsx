@@ -36,8 +36,30 @@ export default function Home() {
     setSearch,
   } = useFilterStore();
 
-  const isSearching = !!search && Array.isArray(results) && results.length > 0;
+  const urlSearch = searchParams.get("search") || "";
+
+  useEffect(() => {
+    if (urlSearch) {
+      setSearch(urlSearch);
+      searchVenues(urlSearch);
+      setCategory([]); // optional: clear filters when search is restored
+    }
+  }, [urlSearch]);
+
+  // useEffect(() => {
+  //   if (urlSearch && results.length === 0) {
+  //     setSearch(urlSearch);
+  //     searchVenues(urlSearch);
+  //     setCategory([]); // optional: clear filters when search is restored
+  //   }
+  // }, [urlSearch]);
+
+  const isSearching = !!urlSearch && results.length > 0;
   const rawVenues = isSearching ? results : allVenues;
+
+  // const isSearching = !!search && Array.isArray(results);
+
+  // const rawVenues = isSearching ? results : allVenues;
 
   console.log("🏠 Home Page Debug:", {
     search,
@@ -63,7 +85,7 @@ export default function Home() {
   const handleSearch = (query) => {
     setSearch(query);
     setCategory([]); // clear category
-    setSearchParams({ page: "1" });
+    setSearchParams({ page: "1", search: query }); // ✅ this is missing in your version
 
     if (sort && sort !== "featured") {
       const [s, o] = sort.split("-");
@@ -72,6 +94,19 @@ export default function Home() {
       searchVenues(query);
     }
   };
+
+  // const handleSearch = (query) => {
+  //   setSearch(query);
+  //   setCategory([]); // clear category
+  //   setSearchParams({ page: "1" });
+
+  //   if (sort && sort !== "featured") {
+  //     const [s, o] = sort.split("-");
+  //     searchVenues(query, s, o);
+  //   } else {
+  //     searchVenues(query);
+  //   }
+  // };
 
   const handleSortChange = (option) => {
     setSort(option);
@@ -140,6 +175,12 @@ export default function Home() {
     currentPage * itemsPerPage
   );
 
+  const showEmptyMessage =
+    !loadingVenues &&
+    !loadingSearch &&
+    ((urlSearch && results.length === 0) ||
+      (!urlSearch && allVenues.length > 0 && rawVenues.length === 0));
+
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold mb-6">
@@ -150,8 +191,12 @@ export default function Home() {
       <CategoryFilter onSelect={handleCategorySelect} />
       <SortBy onChange={handleSortChange} />
 
-      {paginatedVenues.length === 0 ? (
-        <p className="text-center text-gray-500 mt-4">No venues found.</p>
+      {showEmptyMessage ? (
+        <p className="text-center text-gray-500 mt-6 text-lg">
+          {urlSearch
+            ? `No venues found for “${urlSearch}”.`
+            : "No venues match your filters."}
+        </p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
           {paginatedVenues.map((venue) => (

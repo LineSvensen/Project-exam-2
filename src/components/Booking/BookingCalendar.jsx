@@ -54,9 +54,8 @@ export default function BookingCalendar({ bookings = [], onSelectDates }) {
 
     const selectedNights = eachDayOfInterval({
       start: checkIn,
-      end: addDays(checkOut, -1),
+      end: addDays(checkOut, -1), // ✅ exclude checkout day from conflict check
     });
-
     const hasConflict = selectedNights.some((date) =>
       bookedNights.some((booked) => isSameDay(booked, date))
     );
@@ -107,6 +106,7 @@ export default function BookingCalendar({ bookings = [], onSelectDates }) {
             pagedNavigation
             className="mx-auto"
             disabled={(date) =>
+              isBefore(date, new Date()) ||
               bookedNights.some((booked) => isSameDay(booked, date))
             }
             modifiersClassNames={{

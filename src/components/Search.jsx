@@ -1,15 +1,27 @@
 import { useState } from "react";
+import { useEffect } from "react";
 import SearchButton from "../components/Buttons/SearchButton";
 
 export default function SearchBar({ onSearch }) {
   const [query, setQuery] = useState("");
 
   const handleSubmit = (e) => {
-  e.preventDefault();
-  if (query.trim()) {
-    onSearch(query.trim());
-  }
-};
+    e.preventDefault();
+    const trimmed = query.trim();
+    if (trimmed) {
+      const params = new URLSearchParams(window.location.search);
+      params.set("search", trimmed);
+      params.set("page", 1); // reset pagination
+      window.history.pushState({}, "", `?${params}`);
+      onSearch(trimmed);
+    }
+  };
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const search = params.get("search") || "";
+    setQuery(search);
+  }, []);
 
   return (
     <form onSubmit={handleSubmit} className="flex gap-2 mb-6">
