@@ -78,6 +78,24 @@ export default function VenueForm({ mode = "create", initialData = {} }) {
     if (!validateForm()) return;
 
     try {
+      // ✅ 1. If user isn't a venue manager, upgrade them FIRST
+      if (!user?.venueManager) {
+        await fetch(`${API_BASE}/profiles/${user.name}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+            "X-Noroff-API-Key": API_KEY,
+          },
+          body: JSON.stringify({ venueManager: true }),
+        });
+
+        const updatedUser = { ...user, venueManager: true };
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+        useAuthStore.setState({ user: updatedUser });
+      }
+
+      // ✅ 2. Now create the venue
       const res = await fetch(`${API_BASE}/venues`, {
         method: "POST",
         headers: {
@@ -97,22 +115,7 @@ export default function VenueForm({ mode = "create", initialData = {} }) {
       if (!res.ok)
         throw new Error(data.errors?.[0]?.message || "Failed to create venue");
 
-      if (!user?.venueManager) {
-        await fetch(`${API_BASE}/profiles/${user.name}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-            "X-Noroff-API-Key": API_KEY,
-          },
-          body: JSON.stringify({ venueManager: true }),
-        });
-
-        const updatedUser = { ...user, venueManager: true };
-        localStorage.setItem("user", JSON.stringify(updatedUser));
-        useAuthStore.setState({ user: updatedUser });
-      }
-
+      // ✅ 3. Navigate after success
       setShowLoader(true);
       setTimeout(() => {
         navigate("/profile");
@@ -120,7 +123,56 @@ export default function VenueForm({ mode = "create", initialData = {} }) {
     } catch (err) {
       setErrors({ form: err.message });
     }
-  };
+  };s
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (!validateForm()) return;
+
+  //   try {
+  //     const res = await fetch(`${API_BASE}/venues`, {
+  //       method: "POST",
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //         "Content-Type": "application/json",
+  //         "X-Noroff-API-Key": API_KEY,
+  //       },
+  //       body: JSON.stringify({
+  //         ...form,
+  //         price: Number(form.price),
+  //         maxGuests: Number(form.maxGuests),
+  //         media: form.media.filter((url) => url.trim()).map((url) => ({ url })),
+  //       }),
+  //     });
+
+  //     const data = await res.json();
+  //     if (!res.ok)
+  //       throw new Error(data.errors?.[0]?.message || "Failed to create venue");
+
+  //     if (!user?.venueManager) {
+  //       await fetch(`${API_BASE}/profiles/${user.name}`, {
+  //         method: "PUT",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${token}`,
+  //           "X-Noroff-API-Key": API_KEY,
+  //         },
+  //         body: JSON.stringify({ venueManager: true }),
+  //       });
+
+  //       const updatedUser = { ...user, venueManager: true };
+  //       localStorage.setItem("user", JSON.stringify(updatedUser));
+  //       useAuthStore.setState({ user: updatedUser });
+  //     }
+
+  //     setShowLoader(true);
+  //     setTimeout(() => {
+  //       navigate("/profile");
+  //     }, 2000);
+  //   } catch (err) {
+  //     setErrors({ form: err.message });
+  //   }
+  // };
 
   if (showLoader) return <PublishedLoader />;
 

@@ -9,6 +9,12 @@ export const FEATURED_IDS = [
   "08c7b4f4-0900-475a-89ac-dbdef48a03ff",
   "bd936a12-b997-42b3-8833-0d845f65842a",
   "192e3769-8fdd-4fac-8bcd-ba3dbaa23106",
+  "4ca73dfb-f226-4d1a-87ed-56892b117030",
+  "5f86fd74-b840-463e-ab43-6896685c8d70",
+  "0aaa155f-6120-4cb8-8640-01daa32dbba5",
+  "a6c88ebc-335f-4efe-bf61-a980a1e943f6",
 
-  // Replace with real venue IDs from your data
+  // Selected venues with id !
 ];
+// 7fc292df-99f0-4f8f-919f-b42d85dd096d
+// 8834d9ef-73cb-4da8-805b-fadc44a425a2
