@@ -123,7 +123,7 @@ export default function VenueForm({ mode = "create", initialData = {} }) {
     } catch (err) {
       setErrors({ form: err.message });
     }
-  };s
+  };
 
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
