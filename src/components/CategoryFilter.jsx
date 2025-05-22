@@ -6,7 +6,7 @@ import poolIcon from "../assets/pool.png";
 import castleIcon from "../assets/castle.png";
 import wowIcon from "../assets/wow.png";
 import culturalIcon from "../assets/cultural.png";
-import { FiPlus } from "react-icons/fi"; // Feather Icons (clean + professional)
+import { FiPlus } from "react-icons/fi";
 
 const categories = [
   { label: "Cabin", keyword: ["cabin", "treehut"], icon: cabinIcon },
@@ -35,6 +35,7 @@ const categories = [
 
 export default function CategoryFilter({ onSelect }) {
   const [showModal, setShowModal] = useState(false);
+  const [activeLabel, setActiveLabel] = useState(null);
 
   return (
     <>
@@ -43,8 +44,12 @@ export default function CategoryFilter({ onSelect }) {
         {categories.map((cat) => (
           <button
             key={cat.label}
-            onClick={() => onSelect(cat.keyword)}
-            className="flex flex-col items-center p-2 rounded px-4 cursor-pointer hover:bg-gray-200 transition"
+            onClick={() => {
+              onSelect(cat.keyword);
+              setActiveLabel(cat.label);
+            }}
+            className={`flex flex-col items-center p-2 rounded px-4 cursor-pointer transition 
+            ${activeLabel === cat.label ? "bg-gray-200" : "hover:bg-gray-200"}`}
           >
             <img src={cat.icon} alt={cat.label} className="w-12 h-12 mb-1" />
             <span className="text-sm font-medium">{cat.label}</span>
@@ -57,8 +62,13 @@ export default function CategoryFilter({ onSelect }) {
         {categories.slice(0, 3).map((cat) => (
           <button
             key={cat.label}
-            onClick={() => onSelect(cat.keyword)}
-            className="flex-shrink-0 flex flex-col items-center p-2 rounded px-4 cursor-pointer hover:bg-gray-200 transition"
+            onClick={() => {
+              onSelect(cat.keyword);
+              setActiveLabel(cat.label);
+            }}
+            className={`flex-shrink-0 flex flex-col items-center p-2 rounded px-4 cursor-pointer hover:bg-gray-200 transition ${
+              activeLabel === cat.label ? "bg-gray-200" : "hover:bg-gray-200"
+            }`}
           >
             <img src={cat.icon} alt={cat.label} className="w-12 h-12 mb-1" />
             <span className="text-sm font-medium">{cat.label}</span>
@@ -89,14 +99,15 @@ export default function CategoryFilter({ onSelect }) {
                   key={cat.label}
                   onClick={() => {
                     onSelect(cat.keyword);
+                    setActiveLabel(cat.label);
                     setShowModal(false);
                   }}
-                  className="flex flex-col items-center p-2 rounded hover:bg-gray-100 transition"
+                  className="flex flex-col items-center p-2 rounded hover:bg-gray-100 transition cursor-pointer"
                 >
                   <img
                     src={cat.icon}
                     alt={cat.label}
-                    className="w-10 h-10 mb-1"
+                    className="w-10 h-10 mb-1 cursor-pointer"
                   />
                   <span className="text-xs font-medium text-center">
                     {cat.label}

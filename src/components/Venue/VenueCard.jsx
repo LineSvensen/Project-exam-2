@@ -16,7 +16,7 @@ export default function VenueCard({ venue }) {
 
   return (
     <Link to={`/venue/${venue.id}`} onClick={handleClick}>
-      <div className="bg-white shadow-md rounded hover:shadow-lg transition overflow-hidden">
+      <div className="bg-white shadow-md rounded shadow-gray-400/50 hover:shadow-lg overflow-hidden">
         <div className="relative h-48 w-full">
           <img
             src={isValidImage ? imageUrl : fallbackImg}

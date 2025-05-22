@@ -30,7 +30,8 @@ export default function SearchBar({ onSearch }) {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search venues..."
-        className="flex-grow p-2 border rounded"
+        className="flex-grow p-2 border border-gray-300 rounded focus:ring-1 focus:ring-gray-400 focus:outline-none
+"
       />
       <SearchButton disabled={!query.trim()} />
     </form>

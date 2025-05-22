@@ -78,14 +78,14 @@ export default function Home() {
 
   const handleCategorySelect = (keywords) => {
     setCategory(keywords);
-    setSearch(""); // clear search
+    setSearch("");
     setSearchParams({ page: "1" });
   };
 
   const handleSearch = (query) => {
     setSearch(query);
-    setCategory([]); // clear category
-    setSearchParams({ page: "1", search: query }); // ✅ this is missing in your version
+    setCategory([]);
+    setSearchParams({ page: "1", search: query });
 
     if (sort && sort !== "featured") {
       const [s, o] = sort.split("-");
@@ -127,7 +127,6 @@ export default function Home() {
   }, [rawVenues]);
 
   useEffect(() => {
-    // Scroll + force evaluation when rawVenues, sort or category changes
     window.scrollTo({ top: 0, behavior: "instant" });
   }, [sort, category, search, rawVenues]);
 
@@ -146,18 +145,39 @@ export default function Home() {
       : rawVenues
     : [];
 
+  // const sortedVenues = [...filteredVenues].sort((a, b) => {
+  //   switch (sort) {
+  //     case "price-low":
+  //       return a.price - b.price;
+  //     case "price-high":
+  //       return b.price - a.price;
+  //     case "featured":
+  //       const aIndex = FEATURED_IDS.indexOf(a.id);
+  //       const bIndex = FEATURED_IDS.indexOf(b.id);
+  //       return (aIndex === -1 ? 999 : aIndex) - (bIndex === -1 ? 999 : bIndex);
+  //     case "newest":
+  //     default:
+  //       return new Date(b.created) - new Date(a.created);
+  //   }
+  // });
+
   const sortedVenues = [...filteredVenues].sort((a, b) => {
     switch (sort) {
       case "price-low":
         return a.price - b.price;
       case "price-high":
         return b.price - a.price;
-      case "rating-high":
-        return (b.rating || 0) - (a.rating || 0);
       case "featured":
         const aIndex = FEATURED_IDS.indexOf(a.id);
         const bIndex = FEATURED_IDS.indexOf(b.id);
+
+        if (aIndex === -1 && bIndex === -1) {
+          return new Date(b.created) - new Date(a.created);
+        }
+
         return (aIndex === -1 ? 999 : aIndex) - (bIndex === -1 ? 999 : bIndex);
+
+      case "newest":
       default:
         return new Date(b.created) - new Date(a.created);
     }
@@ -181,6 +201,10 @@ export default function Home() {
     ((urlSearch && results.length === 0) ||
       (!urlSearch && allVenues.length > 0 && rawVenues.length === 0));
 
+  const uniqueVenues = Array.from(
+    new Map(paginatedVenues.map((v) => [v.id, v])).values()
+  );
+
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold mb-6">
@@ -199,7 +223,10 @@ export default function Home() {
         </p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-          {paginatedVenues.map((venue) => (
+          {/* {paginatedVenues.map((venue) => (
+            <VenueCard key={venue.id} venue={venue} />
+          ))} */}
+          {uniqueVenues.map((venue) => (
             <VenueCard key={venue.id} venue={venue} />
           ))}
         </div>

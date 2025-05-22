@@ -47,8 +47,7 @@ export default function MyTripsPage() {
           throw new Error("Failed to cancel booking.");
         }
 
-        // Optional: re-fetch or remove from state manually
-        window.location.reload(); // simple refresh solution
+        window.location.reload();
       } catch (err) {
         alert(err.message);
       } finally {
@@ -90,7 +89,7 @@ export default function MyTripsPage() {
                   e.stopPropagation();
                   setEditingBooking(trip);
                 }}
-                className="text-sm text-blue-600 underline"
+                className="button-secondary"
               >
                 Edit Booking
               </button>
@@ -100,7 +99,7 @@ export default function MyTripsPage() {
                   handleCancelBooking(trip.id);
                 }}
                 disabled={deletingId === trip.id}
-                className="text-sm text-red-600 underline"
+                className="button-destructive"
               >
                 {deletingId === trip.id ? "Cancelling..." : "Cancel Booking"}
               </button>

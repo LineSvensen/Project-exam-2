@@ -4,6 +4,7 @@ import useAuthStore from "../../stores/authStore";
 import { format } from "date-fns";
 import ErrorMessage from "../Shared/ErrorMessage";
 import { eachDayOfInterval, parseISO, addDays } from "date-fns";
+import { differenceInCalendarDays } from "date-fns";
 
 const BookingSummary = forwardRef(function BookingSummary(
   {
@@ -26,11 +27,11 @@ const BookingSummary = forwardRef(function BookingSummary(
 
   useEffect(() => {
     if (checkIn && checkOut) {
-      const nightsArray = eachDayOfInterval({
-        start: new Date(checkIn),
-        end: addDays(new Date(checkOut), -1),
-      });
-      setNights(nightsArray.length);
+      const calculatedNights = Math.max(
+        1,
+        differenceInCalendarDays(new Date(checkOut), new Date(checkIn))
+      );
+      setNights(calculatedNights);
     } else {
       setNights(0);
     }

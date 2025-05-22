@@ -1,6 +1,7 @@
 // components/Booking/EditBookingModal.jsx
 import { useState, useEffect } from "react";
 import useAuthStore from "../../stores/authStore";
+import { differenceInCalendarDays } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import {
   addDays,
@@ -24,6 +25,13 @@ export default function EditBookingModal({ booking, onClose }) {
   const [bookedNights, setBookedNights] = useState([]);
   const API_KEY = import.meta.env.VITE_API_KEY;
   const { token } = useAuthStore();
+
+  const nights =
+    range?.from && range?.to
+      ? Math.max(1, differenceInCalendarDays(range.to, range.from))
+      : 0;
+
+  const total = nights * booking.venue.price;
 
   useEffect(() => {
     async function fetchVenueBookings() {
@@ -68,6 +76,11 @@ export default function EditBookingModal({ booking, onClose }) {
       return;
     }
 
+    if (guests > booking.venue.maxGuests) {
+      setError(`Max allowed guests is ${booking.venue.maxGuests}`);
+      return;
+    }
+
     if (isBefore(range.to, range.from)) {
       setError("Check-out must be after check-in.");
       return;
@@ -75,7 +88,7 @@ export default function EditBookingModal({ booking, onClose }) {
 
     const selectedDates = eachDayOfInterval({
       start: range.from,
-      end: addDays(range.to, -1), // ✅ Do NOT include the checkout day in billing
+      end: addDays(range.to, -1),
     });
 
     const hasConflict = selectedDates.some((date) =>
@@ -133,13 +146,25 @@ export default function EditBookingModal({ booking, onClose }) {
         <h2 className="text-lg font-semibold mb-4">Edit Booking</h2>
 
         <label className="block text-sm font-medium mb-2">Guests:</label>
-        <input
-          type="number"
-          value={guests}
-          onChange={(e) => setGuests(Number(e.target.value))}
-          min={1}
-          className="w-full mb-4 p-2 border rounded"
-        />
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setGuests((prev) => Math.max(1, prev - 1))}
+            className="px-3 py-1 bg-gray-200 rounded font-bold text-lg"
+          >
+            −
+          </button>
+          <span className="min-w-[2ch] text-center">{guests}</span>
+          <button
+            type="button"
+            onClick={() =>
+              setGuests((prev) => Math.min(booking.venue.maxGuests, prev + 1))
+            }
+            className="px-3 py-1 bg-gray-200 rounded font-bold text-lg"
+          >
+            +
+          </button>
+        </div>
 
         <label className="block text-sm font-medium mb-2">
           Select new dates:
@@ -160,6 +185,7 @@ export default function EditBookingModal({ booking, onClose }) {
           numberOfMonths={2}
           pagedNavigation
           disabled={(date) =>
+            isBefore(date, new Date()) ||
             bookedNights.some((booked) => isSameDay(booked, date))
           }
           modifiersClassNames={{
@@ -174,6 +200,13 @@ export default function EditBookingModal({ booking, onClose }) {
             {format(range.to, "dd.MM.yyyy")}
           </p>
         )}
+
+        {nights > 0 && (
+          <p className="text-md font-bold text-gray-700 mt-2">
+            <strong>Total:</strong> ${total}
+          </p>
+        )}
+
         <p className="text-xs mt-2">
           By clicking "Update booking" you agree to pay a new amount and will
           get refunded for the previous chosen dates if done 48 hours before

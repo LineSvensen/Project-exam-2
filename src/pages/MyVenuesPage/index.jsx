@@ -1,7 +1,7 @@
 import { useUserVenues } from "../../hooks/useUserVenues";
 import { Link } from "react-router-dom";
 import VenueCard from "../../components/Venue/VenueCard";
-import MyVenueCard from "../../components/Venue/MyVenueCard"; // instead of VenueCard
+import MyVenueCard from "../../components/Venue/MyVenueCard";
 import { useVenueBookings } from "../../hooks/useVenueBookings";
 import BackButton from "../../components/Buttons/BackButton";
 
