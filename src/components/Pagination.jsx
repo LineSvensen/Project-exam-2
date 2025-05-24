@@ -24,11 +24,11 @@ export default function Pagination({
   }
 
   return (
-    <div className="flex justify-center mt-8 flex-wrap gap-2 text-sm">
+    <div className="flex justify-center mt-8 flex-wrap gap-2 text-sm font-color">
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="w-8 h-8 border rounded disabled:opacity-50 cursor-pointer"
+        className="w-8 h-8 button-descret disabled:opacity-50"
       >
         &lt;
       </button>
@@ -37,12 +37,12 @@ export default function Pagination({
         <>
           <button
             onClick={() => onPageChange(1)}
-            className="w-8 h-8 border rounded cursor-pointer"
+            className="w-8 h-8 button-descret"
           >
             1
           </button>
           {startPage > 2 && (
-            <span className="w-8 h-8 text-center cursor-pointer">…</span>
+            <span className="w-8 h-8 text-center button-descret">…</span>
           )}
         </>
       )}
@@ -51,9 +51,9 @@ export default function Pagination({
         <button
           key={page}
           onClick={() => onPageChange(page)}
-          className={`w-8 h-8 border rounded cursor-pointer ${
+          className={`w-8 h-8 button-descret ${
             page === currentPage
-              ? "bg-gray-300 font-semibold cursor-pointer"
+              ? "bg-gray-400 font-bold text-lg button-descret"
               : ""
           }`}
         >
@@ -64,11 +64,11 @@ export default function Pagination({
       {endPage < totalPages && (
         <>
           {endPage < totalPages - 1 && (
-            <span className="w-8 h-8 text-center">…</span>
+            <span className="w-8 h-8 text-center button-descret">…</span>
           )}
           <button
             onClick={() => onPageChange(totalPages)}
-            className="w-8 h-8 border rounded cursor-pointer"
+            className="w-8 h-8 button-descret"
           >
             {totalPages}
           </button>
@@ -78,7 +78,7 @@ export default function Pagination({
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="w-8 h-8 border rounded disabled:opacity-50 cursor-pointer"
+        className="w-8 h-8 button-descret disabled:opacity-50 "
       >
         &gt;
       </button>

@@ -75,29 +75,8 @@ export default function BookingCalendar({ bookings = [], onSelectDates }) {
   };
 
   return (
-    <div className="bg-white shadow-lg p-6 rounded-md space-y-6 border border-gray-200 flex flex-col justify-center items-center">
-      <h3 className="text-xl font-bold">Choose your stay</h3>
-
-      <div className="flex flex-col items-center">
-        <label className="text-sm font-medium mb-1">Guests:</label>
-        <div className="flex items-center gap-4 rounded p-2 mb-4 w-64 justify-center">
-          <button
-            type="button"
-            onClick={() => setGuests((prev) => Math.max(1, prev - 1))}
-            className="button-descret flex justify-center items-center text-lg"
-          >
-            −
-          </button>
-          <span className="text-lg font-semibold">{guests}</span>
-          <button
-            type="button"
-            onClick={() => setGuests((prev) => Math.min(10, prev + 1))}
-            className="button-descret flex justify-center items-center text-lg"
-          >
-            +
-          </button>
-        </div>
-      </div>
+    <div className="bg-white shadow-lg font-inter p-6 rounded-md space-y-6 border border-gray-200 flex flex-col justify-center items-center">
+      <h3 className="text-xl font-bold font-color ">Choose dates</h3>
 
       <div className="flex justify-center items-center">
         <div className="w-full sm:w-auto">
@@ -129,12 +108,34 @@ export default function BookingCalendar({ bookings = [], onSelectDates }) {
 
       {error && <p className="text-red-500 text-sm">{error}</p>}
 
+      <div className="flex flex-col items-center">
+        <label className="p-b pt-2 font-color">Total guests:</label>
+        <p className="text-xs p-2 italic text-gray-500">*Including yourself</p>
+        <div className="flex items-center gap-4 rounded p-2 mb-2 w-64 justify-center">
+          <button
+            type="button"
+            onClick={() => setGuests((prev) => Math.max(1, prev - 1))}
+            className="button-descret flex justify-center items-center text-lg"
+          >
+            −
+          </button>
+          <span className="text-lg font-bold font-color">{guests}</span>
+          <button
+            type="button"
+            onClick={() => setGuests((prev) => Math.min(10, prev + 1))}
+            className="button-descret flex justify-center items-center text-lg"
+          >
+            +
+          </button>
+        </div>
+      </div>
+
       <button
         onClick={handleConfirm}
         disabled={!range?.from || !range?.to}
         className="button-secondary max-w-80"
       >
-        Choose dates
+        Confirm
       </button>
 
       <p className="text-xs text-gray-500 italic mt-2">

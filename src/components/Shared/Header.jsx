@@ -35,7 +35,7 @@ export default function Header() {
 
   return (
     <header className="p-4 bg-white shadow relative z-50">
-      <div className="max-w-6xl xl:px-8 mx-auto flex justify-between items-center px-4">
+      <div className="max-w-6xl xl:px-3 lg:px-2.7 md:px-2.7 sm:px-2.7 mx-auto flex justify-between items-center px-2.7">
         <Link to="/" onClick={handleResetAndNavigateHome}>
           <img src={logo} className="max-h-14" alt="Holidaze logo" />
         </Link>

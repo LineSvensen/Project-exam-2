@@ -207,9 +207,7 @@ export default function Home() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-6">
-        Unlock the holiday of your dreams
-      </h1>
+      <h1 className="h-1-des pb-4">Unlock the holiday of your dreams</h1>
 
       <SearchBar onSearch={handleSearch} />
       <CategoryFilter onSelect={handleCategorySelect} />

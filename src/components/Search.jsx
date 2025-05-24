@@ -11,7 +11,7 @@ export default function SearchBar({ onSearch }) {
     if (trimmed) {
       const params = new URLSearchParams(window.location.search);
       params.set("search", trimmed);
-      params.set("page", 1); // reset pagination
+      params.set("page", 1);
       window.history.pushState({}, "", `?${params}`);
       onSearch(trimmed);
     }
@@ -24,7 +24,7 @@ export default function SearchBar({ onSearch }) {
   }, []);
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-2 mb-6">
+    <form onSubmit={handleSubmit} className="flex gap-2 mb-6 pt-2 pb-2">
       <input
         type="text"
         value={query}

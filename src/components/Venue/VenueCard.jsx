@@ -29,7 +29,7 @@ export default function VenueCard({ venue }) {
           </div>
           <div className="absolute top-1 left-1 z-10">
             {FEATURED_IDS.includes(venue.id) && (
-              <span className="flex w-16 text-center ml-4 mt-2 text-xs bg-gray-950/70 text-white font-bold px-2 py-1 rounded">
+              <span className="flex w-16 text-center justify-center items-center  ml-1 mt-1 text-xs bg-gray-950/70 py-1.5 px-4 text-white font-bold  rounded">
                 Featured
               </span>
             )}
@@ -40,7 +40,7 @@ export default function VenueCard({ venue }) {
           <h2 className="text-lg font-semibold truncate capitalize">
             {venue.name}
           </h2>
-          <p className="text-sm">
+          <p className="text-sm truncate">
             {venue.location?.city || "Unknown"},{" "}
             {venue.location?.country || "Unknown"}
           </p>

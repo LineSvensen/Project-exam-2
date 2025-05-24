@@ -69,7 +69,7 @@ const BookingSummary = forwardRef(function BookingSummary(
         let message =
           data?.errors?.[0]?.message || "Booking failed. Please try again.";
 
-        // Customize for invalid token
+
         if (message.toLowerCase().includes("authorization token")) {
           message = "Please Log in or register to reserve";
         }
@@ -111,20 +111,20 @@ const BookingSummary = forwardRef(function BookingSummary(
       id="summary"
       className="bg-white shadow p-4 rounded space-y-2 mt-6 font-inter"
     >
-      <h3 className="text-lg font-bold">Your Booking</h3>
-      <p>
+      <h3 className="text-lg font-bold font-color">Your Booking</h3>
+      <p className="font-color">
         Guests: <strong>{guests}</strong>
       </p>
-      <p>
+      <p className="font-color">
         Check-in: <strong>{displayCheckIn}</strong>
       </p>
-      <p>
+      <p className="font-color">
         Check-out: <strong>{displayCheckOut}</strong>
       </p>
-      <p>
+      <p className="font-color">
         Nights: <strong>{nights}</strong>
       </p>
-      <p>
+      <p className="font-color">
         Total: <strong>${total}</strong>
       </p>
 
@@ -133,7 +133,7 @@ const BookingSummary = forwardRef(function BookingSummary(
         onClick={handleReserve}
         className="w-full mt-4 py-2 px-4 button-primary disabled:opacity-50"
       >
-        Reserve
+        Reserve booking
       </button>
       {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
     </div>

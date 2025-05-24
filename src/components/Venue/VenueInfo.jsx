@@ -18,50 +18,51 @@ export default function VenueInfo({ venue }) {
       <div className="bg-white shadow p-4 rounded space-y-4 font-inter">
         <div>
           <div className="flex flex-row justify-between">
-            <h1 className="text-2xl font-bold font-poppins tracking-wide mb-4 truncate capitalize">
+            <h1 className="text-2xl font-bold font-poppins tracking-wide mb-4 wrap capitalize">
               {venue.name}
             </h1>
           </div>
-          <p>
+          <p className="text-gray-600">
             {venue.location?.city || "Unknown"},{" "}
             {venue.location?.country || "Unknown"}
           </p>
 
-          <p className="font-bold mt-4 mb-4">
-            Price per night:{" "}
-            <span className="font-semibold">${venue.price}</span>
-          </p>
+          <h2 className="font-bold mt-4 mb-4">
+            Price per night: <span className="font-bold">${venue.price}</span>
+          </h2>
 
-          <p className="text-sm text-gray-500 mt-4 mb-4">
+          <p className="text-sm text-gray-600 mt-4 mb-4">
             For max {maxGuests} people
           </p>
-          <p className="text-sm text-gray-500 mt-4 flex flex-row items-center gap-2">
+          <p className="text-sm font-color mt-4 flex flex-row items-center gap-2">
             <Avatar url={owner?.avatar?.url} size="w-8 h-8" />
-            <span className="font-semibold">{owner?.name}</span> is venue owner
+            <span className="font-bold">{owner?.name}</span> is venue owner
           </p>
         </div>
 
         <div>
           <div className="gap-2 mt-4 mb-4">
-            <h3 className="font-bold mb-2">About this place:</h3>
+            <h2 className="font-bold mb-2">About this place:</h2>
 
-            {/* Mobile shortened text ... modal further down */}
-            <p className="text-gray-700 block md:hidden">
+            {/* mobile shortened text. modal further down */}
+            <p className="text-gray-600 block md:hidden">
               {shortDesc}...
               <button
                 onClick={() => setShowFullDesc(true)}
-                className="text-black underline ml-1"
+                className="font-color underline ml-1"
               >
                 Read more
               </button>
             </p>
 
             {/* full text. desktop. */}
-            <p className="text-gray-700 hidden md:block">{description}</p>
+            <p className="text-gray-600 hidden md:block max-h-52 overflow-y-auto pr-2">
+              {description}
+            </p>
           </div>
           {(meta?.wifi || meta?.parking || meta?.breakfast || meta?.pets) && (
             <>
-              <h3 className="font-bold mb-2">This place offers:</h3>
+              <h2 className="font-bold mb-2">This place offers:</h2>
               <div className="flex flex-wrap items-start gap-4 text-sm py-2">
                 {meta?.wifi && (
                   <div className="flex flex-col items-center w-24 text-center">
@@ -103,7 +104,7 @@ export default function VenueInfo({ venue }) {
             </>
           )}
 
-          <h3 className="font-bold mt-4">Full address:</h3>
+          <h2 className="font-bold mt-4">Full address:</h2>
           <p className="text-sm text-gray-600 mt-2 mb-4">
             {venue.location?.address || "No address provided"}{" "}
             {venue.location?.zip || ""}, {venue.location?.city || "Unknown"},{" "}
@@ -125,13 +126,19 @@ export default function VenueInfo({ venue }) {
 
       {/* the popup modal! for full text*/}
       {showFullDesc && (
-        <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex justify-center items-center">
-          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 shadow-lg overflow-y-auto max-h-[80vh]">
-            <h2 className="text-lg font-semibold mb-4">Full Description</h2>
-            <p className="text-gray-800">{description}</p>
+        <div
+          className="fixed inset-0 z-50 bg-black/50 bg-opacity-40 flex justify-center items-center"
+          onClick={() => setShowFullDesc(false)}
+        >
+          <div
+            className="bg-white rounded p-6 max-w-md w-full mx-4 shadow-lg overflow-y-auto max-h-[80vh]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 className="text-lg font-bold mb-4">Full Description</h2>
+            <p className="text-gray-600">{description}</p>
             <button
               onClick={() => setShowFullDesc(false)}
-              className="mt-6 px-4 py-2 bg-black text-white rounded hover:bg-gray-900"
+              className="mt-6 px-4 py-2 button-cancel-ignore"
             >
               Close
             </button>

@@ -18,6 +18,62 @@
   --neutral-white: #ffffff;
 }
 
+.bg-teal {
+  background: var(--secondary-teal);
+}
+
+.font-color {
+  color: var(--neutral-black);
+}
+
+.h-1-des {
+  font-family: poppins;
+  letter-spacing: 1px;
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--neutral-black);
+}
+
+.h-1-mob {
+  font-family: poppins;
+  letter-spacing: 1px;
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--neutral-black);
+}
+
+.h-2-des {
+  font-family: inter;
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--neutral-black);
+}
+
+.h-2-mob {
+  font-family: inter;
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--neutral-black);
+}
+
+.p-n {
+  font-size: 16px;
+  font-weight: normal;
+  font-family: inter;
+}
+
+.p-b {
+  font-size: 16px;
+  font-weight: bold;
+  font-family: inter;
+}
+
+.p-mini {
+  font-size: 14px;
+  font-family: inter;
+  font-weight: normal;
+}
+
 .button-primary {
   background-color: var(--primary-red);
   color: var(--neutral-white);
@@ -103,7 +159,7 @@
 
 .button-descret {
   background-color: var(--color-white);
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+  box-shadow: rgba(0, 0, 0, 0.395) 0px 1px 2px 0px;
   padding-left: 16px;
   padding-right: 16px;
   padding-top: 8px;
@@ -114,6 +170,44 @@
   display: flex;
   justify-content: center;
   justify-items: center;
+  align-items: center;
+}
+
+.rdp-chevron {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+.rdp-nav svg polygon {
+  fill: var(--secondary-teal-light) !important;
+  padding: 8px;
+}
+
+.rdp-nav button:hover svg polygon {
+  fill: var(--secondary-teal-dark) !important; /* Darker on hover */
+}
+
+.rdp-month {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.rdp-range_start .rdp-day_button {
+  background-color: var(--secondary-teal) !important;
+}
+
+.rdp-range_end .rdp-day_button {
+  background-color: var(--secondary-teal) !important;
+}
+
+.rdp-range_middle .rdp-day_button {
+  color: var(--neutral-black) !important;
+}
+
+.rdp-day:hover {
+  background-color: #2f7f881e !important;
 }
 
 .button-descret:hover {
