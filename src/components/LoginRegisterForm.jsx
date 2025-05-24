@@ -23,7 +23,7 @@ export default function LoginRegisterForm() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setLoginError(""); // Clear previous
+    setLoginError("");
 
     try {
       const res = await fetch("https://v2.api.noroff.dev/auth/login", {
@@ -55,7 +55,7 @@ export default function LoginRegisterForm() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    setRegisterError(""); // Clear previous
+    setRegisterError("");
 
     try {
       const payload = {
@@ -117,7 +117,7 @@ export default function LoginRegisterForm() {
           onChange={(e) =>
             setLoginData({ ...loginData, email: e.target.value })
           }
-          className="w-full p-2 border rounded mb-3"
+          className="w-full p-2 border rounded mb-3 focus:ring-1 focus:ring-gray-400 focus:outline-none"
           required
         />
         <input
@@ -127,7 +127,7 @@ export default function LoginRegisterForm() {
           onChange={(e) =>
             setLoginData({ ...loginData, password: e.target.value })
           }
-          className="w-full p-2 border rounded mb-4"
+          className="w-full p-2 border rounded mb-4 focus:ring-1 focus:ring-gray-400 focus:outline-none"
           required
         />
         <button type="submit" className="w-full button-primary">
@@ -148,7 +148,7 @@ export default function LoginRegisterForm() {
           onChange={(e) =>
             setRegisterData({ ...registerData, name: e.target.value })
           }
-          className="w-full p-2 border rounded mb-3"
+          className="w-full p-2 border rounded mb-3 focus:ring-1 focus:ring-gray-400 focus:outline-none"
           required
         />
         <input
@@ -158,7 +158,7 @@ export default function LoginRegisterForm() {
           onChange={(e) =>
             setRegisterData({ ...registerData, email: e.target.value })
           }
-          className="w-full p-2 border rounded mb-3"
+          className="w-full p-2 border rounded mb-3 focus:ring-1 focus:ring-gray-400 focus:outline-none"
           required
         />
         <input
@@ -168,7 +168,7 @@ export default function LoginRegisterForm() {
           onChange={(e) =>
             setRegisterData({ ...registerData, password: e.target.value })
           }
-          className="w-full p-2 border rounded mb-3"
+          className="w-full p-2 border rounded mb-3 focus:ring-1 focus:ring-gray-400 focus:outline-none"
           required
         />
         <input
@@ -178,7 +178,7 @@ export default function LoginRegisterForm() {
           onChange={(e) =>
             setRegisterData({ ...registerData, avatarUrl: e.target.value })
           }
-          className="w-full p-2 border rounded mb-4"
+          className="w-full p-2 border rounded mb-4 focus:ring-1 focus:ring-gray-400 focus:outline-none"
         />
         <p className="text-xs text-gray-500 mb-3">
           Provide a valid URL for your avatar image.
@@ -199,7 +199,10 @@ export default function LoginRegisterForm() {
         <button type="submit" className="w-full button-primary">
           Register
         </button>
-        <ErrorMessage message={registerError} />
+        <ErrorMessage
+          message={registerError}
+          type={registerError.includes("successful") ? "success" : "error"}
+        />
       </form>
     </div>
   );

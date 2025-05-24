@@ -1,4 +1,5 @@
 import { useUserVenues } from "../../hooks/useUserVenues";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import VenueCard from "../../components/Venue/VenueCard";
 import MyVenueCard from "../../components/Venue/MyVenueCard";
@@ -7,6 +8,10 @@ import BackButton from "../../components/Buttons/BackButton";
 
 export default function MyVenuesPage() {
   const { venues, loading, error } = useUserVenues();
+
+  useEffect(() => {
+    document.title = "My venues | Holidaze";
+  }, []);
 
   if (loading) return <p className="p-8 text-center">Loading your venues...</p>;
   if (error) return <p className="text-red-500 text-center">{error}</p>;

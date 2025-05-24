@@ -10,13 +10,15 @@ export default function ImageGallery({
 }) {
   if (!media.length) return <p>No images available</p>;
 
+  const showNavigation = media.length > 1;
+
   return (
     <div className="w-full max-w-4xl mx-auto aspect-[4/3] sm:aspect-[3/2] md:aspect-[16/9] overflow-hidden rounded-lg">
       <Swiper
         modules={[Navigation, Pagination]}
         slidesPerView={1}
-        navigation
-        pagination={{ clickable: true }}
+        navigation={showNavigation}
+        pagination={showNavigation ? { clickable: true } : false}
         className="w-full h-full custom-swiper"
       >
         {media.map((img, index) => (

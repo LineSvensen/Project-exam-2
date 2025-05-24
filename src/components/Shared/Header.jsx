@@ -44,20 +44,20 @@ export default function Header() {
           <Link
             to="/"
             onClick={handleResetAndNavigateHome}
-            className=" font-poppins link-hover "
+            className=" font-poppins link-hover font-color"
           >
             HOME
           </Link>
 
           <Link to="/favourites" className="link-hover ">
-            <span className="text-xl cursor-pointer">
+            <span className="text-xl cursor-pointer font-color">
               <FaRegHeart />
             </span>
           </Link>
 
           <button
             onClick={handleProfileClick}
-            className="cursor-pointer link-hover "
+            className="cursor-pointer link-hover font-color"
           >
             {user ? (
               <Avatar url={user.avatar?.url} size="w-8 h-8" />
@@ -69,7 +69,7 @@ export default function Header() {
           {user && (
             <button
               onClick={handleLogout}
-              className="text-black cursor-pointer font-poppins link-hover "
+              className="font-color cursor-pointer font-poppins link-hover "
             >
               LOG OUT
             </button>
@@ -77,7 +77,7 @@ export default function Header() {
         </div>
 
         {/* burger icon! */}
-        <div className="md:hidden flex items-center space-x-4">
+        <div className="md:hidden flex items-center space-x-4 font-color">
           <button onClick={handleProfileClick} aria-label="Profile">
             {user ? (
               <Avatar url={user.avatar?.url} size="w-8 h-8" />
@@ -87,7 +87,7 @@ export default function Header() {
           </button>
 
           <button
-            className="text-black cursor-pointer"
+            className="font-color cursor-pointer"
             onClick={toggleMenu}
             aria-label="Toggle menu"
           >
@@ -98,94 +98,84 @@ export default function Header() {
 
       {/* mobile open Menu */}
       {menuOpen && (
-        <div className="fixed inset-0 bg-teal-800 text-white flex flex-col items-start p-6 space-y-6 text-sm md:hidden">
-          <button
-            onClick={toggleMenu}
-            className="absolute top-4 right-4 text-white cursor-pointer"
-            aria-label="Close menu"
+        <div
+          className="fixed inset-0 bg-black/50 bg-opacity-40 z-40"
+          onClick={toggleMenu}
+        >
+          <div
+            className="w-64 h-full bg-[#006d77] text-white flex flex-col items-start p-6 space-y-6 text-sm absolute right-0 top-0 shadow-lg z-50"
+            onClick={(e) => e.stopPropagation()}
           >
-            <X size={28} />
-          </button>
-
-          <div className="flex flex-col items-start space-y-1 border-b border-white pb-4 w-full">
             <button
-              onClick={handleProfileClick}
-              className="flex items-center space-x-2"
-            >
-              {user ? (
-                <Avatar url={user.avatar?.url} size="w-12 h-12" />
-              ) : (
-                <FaUserCircle className="text-3xl" />
-              )}
-              <span className="text-white text-base font-semibold">
-                {user ? user.name : "Login"}
-              </span>
-            </button>
-          </div>
-
-          <Link
-            to="/"
-            onClick={toggleMenu}
-            className="hover:underline font-bold"
-          >
-            Home
-          </Link>
-          <Link
-            to="/profile"
-            onClick={toggleMenu}
-            className="hover:underline font-bold"
-          >
-            My Profile
-          </Link>
-
-          {user && (
-            <>
-              <Link
-                to="/trips"
-                onClick={toggleMenu}
-                className="ml-4 hover:underline"
-              >
-                My Trips
-              </Link>
-              <Link
-                to="/venues"
-                onClick={toggleMenu}
-                className="ml-4 hover:underline"
-              >
-                My Venues
-              </Link>
-              <Link
-                to="/guests"
-                onClick={toggleMenu}
-                className="ml-4 hover:underline"
-              >
-                My Guests
-              </Link>
-              <Link
-                to="/favourites"
-                onClick={toggleMenu}
-                className="hover:underline font-bold"
-              >
-                My Favourites
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="hover:underline font-bold cursor-pointer"
-              >
-                Logout
-              </button>
-            </>
-          )}
-
-          {!user && (
-            <Link
-              to="/login"
               onClick={toggleMenu}
-              className="hover:underline font-bold"
+              className="absolute top-4 right-4 text-white cursor-pointer"
+              aria-label="Close menu"
             >
-              Login
+              <X size={28} />
+            </button>
+
+            <div className="flex flex-col items-start space-y-1 border-b border-white pb-4 w-full">
+              <button
+                onClick={handleProfileClick}
+                className="flex items-center space-x-2"
+              >
+                {user ? (
+                  <Avatar
+                    url={user.avatar?.url}
+                    size="w-12 h-12 cursor-pointer"
+                  />
+                ) : (
+                  <FaUserCircle className="text-3xl cursor-pointer" />
+                )}
+                <span className="text-white text-base font-semibold cursor-pointer">
+                  {user ? user.name : "LOG IN"}
+                </span>
+              </button>
+            </div>
+
+            <Link to="/" onClick={toggleMenu} className="links-m-menu ">
+              HOME
             </Link>
-          )}
+            <Link to="/profile" onClick={toggleMenu} className="links-m-menu">
+              MY PROFILE
+            </Link>
+
+            {user && (
+              <>
+                <Link
+                  to="/trips"
+                  onClick={toggleMenu}
+                  className="ml-4 font-inter"
+                >
+                  My Trips
+                </Link>
+                <Link
+                  to="/venues"
+                  onClick={toggleMenu}
+                  className="ml-4 font-inter"
+                >
+                  My Venues
+                </Link>
+
+                <Link
+                  to="/favourites"
+                  onClick={toggleMenu}
+                  className="links-m-menu"
+                >
+                  MY FAVOURITES
+                </Link>
+                <button onClick={handleLogout} className="links-m-menu">
+                  LOG OUT
+                </button>
+              </>
+            )}
+
+            {!user && (
+              <Link to="/login" onClick={toggleMenu} className="links-m-menu">
+                LOG IN/REGISTER
+              </Link>
+            )}
+          </div>
         </div>
       )}
     </header>

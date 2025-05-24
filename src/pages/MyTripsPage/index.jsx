@@ -1,4 +1,5 @@
 import { useBookings } from "../../hooks/useUserBookings";
+import { useEffect } from "react";
 import BackButton from "../../components/Buttons/BackButton";
 import useAuthStore from "../../stores/authStore";
 import { useState } from "react";
@@ -13,6 +14,10 @@ export default function MyTripsPage() {
   const { token } = useAuthStore();
   const API_KEY = import.meta.env.VITE_API_KEY;
   const [deletingId, setDeletingId] = useState(null);
+
+  useEffect(() => {
+    document.title = "My Trips | Holidaze";
+  }, []);
 
   if (loading) return <p>Loading your bookings...</p>;
   if (error) return <p className="text-red-500">{error}</p>;

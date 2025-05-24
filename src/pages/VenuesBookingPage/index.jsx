@@ -4,6 +4,7 @@ import { useVenue } from "../../hooks/useSingleVenue";
 import { useVenueBookings } from "../../hooks/useVenueBookings";
 import VenueCard from "../../components/Venue/VenueCard";
 import BackButton from "../../components/Buttons/BackButton";
+import Avatar from "../../components/Shared/Avatar";
 
 export default function VenueBookingsPage() {
   const { id } = useParams();
@@ -12,28 +13,43 @@ export default function VenueBookingsPage() {
 
   const [upcoming, setUpcoming] = useState([]);
   const [past, setPast] = useState([]);
+  const [totalEarnings, setTotalEarnings] = useState(0);
+  const FEE = 15;
 
   useEffect(() => {
-    if (!bookings || bookings.length === 0) return;
+    document.title = "My venue bookings | Holidaze";
+  }, []);
+
+  useEffect(() => {
+    if (!bookings || bookings.length === 0 || !venue) return;
 
     const now = new Date();
-    const futureBookings = [];
-    const pastBookings = [];
+    const future = [];
+    const previous = [];
+    let earnings = 0;
 
     bookings.forEach((booking) => {
-      const dateFrom = new Date(booking.dateFrom);
-      const dateTo = new Date(booking.dateTo);
+      const from = new Date(booking.dateFrom);
+      const to = new Date(booking.dateTo);
+      const nights = Math.max(
+        1,
+        Math.ceil((to - from) / (1000 * 60 * 60 * 24))
+      );
+      const total = venue.price * nights;
+      const afterFee = total - FEE;
+      earnings += afterFee;
 
-      if (dateTo >= now) {
-        futureBookings.push(booking);
+      if (to >= now) {
+        future.push({ ...booking, nights, total, afterFee });
       } else {
-        pastBookings.push(booking);
+        previous.push({ ...booking, nights, total, afterFee });
       }
     });
 
-    setUpcoming(futureBookings);
-    setPast(pastBookings);
-  }, [bookings]);
+    setUpcoming(future);
+    setPast(previous);
+    setTotalEarnings(earnings);
+  }, [bookings, venue]);
 
   if (venueLoading || bookingsLoading)
     return <p className="p-6">Loading venue and bookings...</p>;
@@ -46,7 +62,16 @@ export default function VenueBookingsPage() {
       <h1 className="text-2xl font-bold mb-4 mt-4">
         Bookings for: {venue.name}
       </h1>
+
       <VenueCard venue={venue} />
+
+      <div className="bg-green-50 border border-green-200 text-green-800 rounded p-4 mt-6">
+        <h2 className="text-lg font-semibold mb-1">Total earnings after fee</h2>
+        <p className="text-2xl font-bold">${totalEarnings.toFixed(2)}</p>
+        <p className="text-xs text-gray-500 pt-2">
+          A $15 fee is deducted per booking
+        </p>
+      </div>
 
       <div className="mt-8">
         <h2 className="text-xl font-semibold mb-2">Upcoming Bookings</h2>
@@ -56,10 +81,16 @@ export default function VenueBookingsPage() {
           <ul className="space-y-3">
             {upcoming.map((booking) => (
               <li key={booking.id} className="bg-white shadow p-3 rounded">
-                <p>
-                  <strong>{booking.customer?.name}</strong> — {booking.guests}{" "}
-                  guest(s)
-                </p>
+                <div className="flex items-center gap-3 mb-1">
+                  <Avatar
+                    url={booking.customer?.avatar?.url}
+                    size="w-10 h-10"
+                  />
+                  <strong>{booking.customer?.name}</strong>
+                  <span className="text-sm text-gray-500">
+                    — {booking.guests} guest(s)
+                  </span>
+                </div>
                 <p className="text-sm text-gray-600">
                   From{" "}
                   <strong>
@@ -70,6 +101,18 @@ export default function VenueBookingsPage() {
                     {new Date(booking.dateTo).toLocaleDateString()}
                   </strong>
                 </p>
+                <p className="text-sm mt-1">
+                  Total: ${booking.total} ({booking.nights} night
+                  {booking.nights > 1 ? "s" : ""})
+                </p>
+                <div className="flex flex-row text-center pt-2">
+                  <p className="text-sm text-green-700 font-medium">
+                    Your earnings: ${booking.afterFee.toFixed(2)}
+                  </p>
+                  <p className="text-sm pl-2 text-gray-600">
+                    (after $15 Holidaze fee)
+                  </p>
+                </div>
               </li>
             ))}
           </ul>
@@ -87,10 +130,16 @@ export default function VenueBookingsPage() {
                 key={booking.id}
                 className="bg-gray-100 shadow-inner p-3 rounded"
               >
-                <p>
-                  <strong>{booking.customer?.name}</strong> — {booking.guests}{" "}
-                  guest(s)
-                </p>
+                <div className="flex items-center gap-3 mb-1">
+                  <Avatar
+                    url={booking.customer?.avatar?.url}
+                    size="w-10 h-10"
+                  />
+                  <strong>{booking.customer?.name}</strong>
+                  <span className="text-sm text-gray-500">
+                    — {booking.guests} guest(s)
+                  </span>
+                </div>
                 <p className="text-sm text-gray-600">
                   From{" "}
                   <strong>
@@ -100,6 +149,13 @@ export default function VenueBookingsPage() {
                   <strong>
                     {new Date(booking.dateTo).toLocaleDateString()}
                   </strong>
+                </p>
+                <p className="text-sm mt-1">
+                  Total: ${booking.total} for {booking.nights} night
+                  {booking.nights > 1 ? "s" : ""}
+                </p>
+                <p className="text-sm text-green-700 font-medium">
+                  Earnings after fee: ${booking.afterFee.toFixed(2)}
                 </p>
               </li>
             ))}

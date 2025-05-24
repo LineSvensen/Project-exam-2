@@ -18,9 +18,13 @@ export default function ProfilePage() {
     loadUserFromStorage();
   }, [refreshKey]);
 
+  useEffect(() => {
+    document.title = "My Profile | Holidaze";
+  }, []);
+
   const handleProfileUpdated = () => {
-    setRefreshKey((prev) => prev + 1); // 👈 trigger re-load
-    setShowEdit(false); // close modal
+    setRefreshKey((prev) => prev + 1);
+    setShowEdit(false);
   };
 
   useEffect(() => {

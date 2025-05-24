@@ -18,7 +18,7 @@
   --neutral-white: #ffffff;
 }
 
-.bg-teal {
+.teal-bg {
   background: var(--secondary-teal);
 }
 
@@ -275,4 +275,10 @@
 
 .link-hover:hover::after {
   width: 100%;
+}
+
+.links-m-menu {
+  font-family: poppins;
+  letter-spacing: 1px;
+  cursor: pointer;
 }

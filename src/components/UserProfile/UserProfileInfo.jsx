@@ -11,13 +11,13 @@ export default function UserProfileInfo({ user }) {
   if (!profile) return null;
 
   return (
-    <div className="bg-white shadow rounded p-4">
+    <div className="bg-white shadow rounded p-4 font-inter">
       <Avatar url={profile.avatar?.url} size="w-28 h-28" />
-      <h2 className="text-xl font-semibold mb-2">{profile.name}</h2>
+      <h2 className="text-xl font-semibold mb-2 mt-4">{profile.name}</h2>
       <p className="text-gray-600 mb-2">{profile.email}</p>
 
       <div className="mt-4 space-y-1 text-sm">
-        <p>
+        <p className="mb-2">
           <strong>Bio:</strong>{" "}
           {profile.bio || <span className="text-gray-500">Not provided</span>}
         </p>

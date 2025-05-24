@@ -6,16 +6,17 @@ export default function Avatar({
   size = "w-12 h-12",
   className = "",
 }) {
-  const fallback = defaultAvatar;
+  const isDefaultUnsplash =
+    !url || url.includes("images.unsplash.com/photo-1579547945413");
 
   return (
     <img
-      src={url || fallback}
+      src={isDefaultUnsplash ? defaultAvatar : url}
       alt={alt}
       className={`rounded-full object-cover border border-gray-300 ${size} ${className}`}
       onError={(e) => {
         e.currentTarget.onerror = null;
-        e.currentTarget.src = fallback;
+        e.currentTarget.src = defaultAvatar;
       }}
     />
   );

@@ -4,6 +4,7 @@ import petsImg from "../../assets/pets.png";
 import parkingImg from "../../assets/parking.png";
 import wifiImg from "../../assets/wifi.png";
 import Avatar from "../Shared/Avatar";
+import { Link } from "react-router-dom";
 
 export default function VenueInfo({ venue }) {
   const [showFullDesc, setShowFullDesc] = useState(false);
@@ -27,17 +28,24 @@ export default function VenueInfo({ venue }) {
             {venue.location?.country || "Unknown"}
           </p>
 
+          <p className="text-sm text-gray-600 mt-4 mb-4">
+            For max {maxGuests} people
+          </p>
+
           <h2 className="font-bold mt-4 mb-4">
             Price per night: <span className="font-bold">${venue.price}</span>
           </h2>
 
-          <p className="text-sm text-gray-600 mt-4 mb-4">
-            For max {maxGuests} people
-          </p>
-          <p className="text-sm font-color mt-4 flex flex-row items-center gap-2">
+          <Link
+            to={`/profile/${owner?.name}`}
+            className="text-sm font-color mt-4 flex flex-row items-center gap-2"
+          >
             <Avatar url={owner?.avatar?.url} size="w-8 h-8" />
-            <span className="font-bold">{owner?.name}</span> is venue owner
-          </p>
+            <span className="font-bold hover:text-gray-600">
+              {owner?.name}
+            </span>{" "}
+            is venue owner
+          </Link>
         </div>
 
         <div>

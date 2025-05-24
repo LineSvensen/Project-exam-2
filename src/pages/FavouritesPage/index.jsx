@@ -15,6 +15,10 @@ export default function FavouritesPage() {
     }
   }, [user]);
 
+  useEffect(() => {
+    document.title = "Your favourites | Holidaze";
+  }, []);
+
   if (!user) {
     return (
       <div className="max-w-6xl mx-auto px-4 py-8 text-center flex justify-center flex-col items-center gap-4">
@@ -32,6 +36,7 @@ export default function FavouritesPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
+      <BackButton />
       <h1 className="text-2xl font-bold mb-6">Your Favourites</h1>
       {favourites.length === 0 ? (
         <p className="text-gray-500">You have no favourite venues yet.</p>
