@@ -1,10 +1,10 @@
-# ✨🏡 Holidaze - Booking Platform
+# <img src="src/assets/holidaze-logo-mini.png" width="20" /> Holidaze <img src="src/assets/holidaze-logo-mini.png" width="20" />
 
-### Demo
+### An online marketplace for short and long homestays. You can both book venues or/and list one. This was my project exam 2025 (Noroff school of technology and digital media).
 
-Live Demo: _Add your deployment link here (e.g., Vercel or Netlify)_
-
----
+<p align="center">
+  <img src="src/assets/holidaze-gif-preview.gif" width="300" />
+</p>
 
 ## 📖 Description
 
@@ -242,7 +242,3 @@ Illustrations: Flaticon
 This project is licensed under the MIT License.
 
 Built as part of the Noroff Frontend Development Course – Project Exam 2
-
-```
-
-```

@@ -76,7 +76,7 @@ export default function CategoryFilter({ onSelect }) {
         ))}
         <button
           onClick={() => setShowModal(true)}
-          className="flex-shrink-0 flex flex-col items-center justify-center p-2 rounded px-4 bg-gray-100 hover:bg-gray-200 transition"
+          className="flex-shrink-0 cursor-pointer flex flex-col items-center justify-center p-2 rounded px-4 bg-gray-100 hover:bg-gray-200 transition"
         >
           <FiPlus className="text-xl mb-1" />
           <span className="text-sm font-medium">More</span>

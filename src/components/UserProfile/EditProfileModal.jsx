@@ -31,8 +31,6 @@ export default function EditProfileModal({ onClose, onUpdated }) {
     };
 
     try {
-      
-
       const res = await fetch(
         `https://v2.api.noroff.dev/holidaze/profiles/${user.name}`,
         {
@@ -50,7 +48,6 @@ export default function EditProfileModal({ onClose, onUpdated }) {
       );
 
       const data = await res.json();
-      
 
       if (!res.ok) {
         throw new Error(data.errors?.[0]?.message || "Failed to update");
@@ -67,7 +64,7 @@ export default function EditProfileModal({ onClose, onUpdated }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
+    <div className="fixed inset-0 bg-black/50 bg-opacity-40 flex justify-center items-center z-50">
       <div className="bg-white rounded p-6 w-full max-w-md shadow-lg">
         <h2 className="text-lg font-semibold mb-4">Edit Profile</h2>
 

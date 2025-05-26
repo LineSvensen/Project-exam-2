@@ -3,7 +3,6 @@
   --rdp-background-color: white;
   --rdp-accent-color-dark: #0f766e;
   font-family: "Inter", sans-serif;
-  
 }
 
 .rdp-month {
@@ -21,7 +20,6 @@
 }
 
 .rdp-nav {
-  justify-content: center !important;
   margin-bottom: 1rem;
 }
 
