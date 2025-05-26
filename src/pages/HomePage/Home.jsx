@@ -49,13 +49,6 @@ export default function Home() {
   const isSearching = !!urlSearch && results.length > 0;
   const rawVenues = isSearching ? results : allVenues;
 
-  console.log("🏠 Home Page Debug:", {
-    search,
-    results,
-    allVenues,
-    isSearching,
-    category,
-  });
 
   const handlePageChange = (page) => {
     setSearchParams({ page: String(page) });

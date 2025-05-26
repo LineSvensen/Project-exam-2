@@ -1,4 +1,3 @@
-// components/Booking/EditBookingModal.jsx
 import { useState, useEffect } from "react";
 import useAuthStore from "../../stores/authStore";
 import { differenceInCalendarDays } from "date-fns";
@@ -51,11 +50,11 @@ export default function EditBookingModal({ booking, onClose }) {
         const nights = filteredBookings.flatMap((b) => {
           const from = parseISO(b.dateFrom);
           const to = parseISO(b.dateTo);
-          return eachDayOfInterval({ start: from, end: addDays(to, -1) }); // ✅
+          return eachDayOfInterval({ start: from, end: addDays(to, -1) }); 
         });
         setBookedNights(nights);
       } catch (err) {
-        console.error("Error fetching venue bookings", err);
+        setError("Something went wrong. Please try again later.");
       }
     }
     fetchVenueBookings();

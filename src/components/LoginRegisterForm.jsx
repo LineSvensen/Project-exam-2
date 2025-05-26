@@ -1,4 +1,3 @@
-// components/LoginRegisterForm.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../stores/authStore";
@@ -107,7 +106,7 @@ export default function LoginRegisterForm() {
         Why not do both? Login or register today.
       </p>
 
-      {/* Login Form */}
+      {/* Login form */}
       <form onSubmit={handleLogin} className="mb-6">
         <h2 className="text-lg font-semibold mb-3">Login</h2>
         <input
@@ -138,7 +137,7 @@ export default function LoginRegisterForm() {
 
       <hr className="mb-6" />
 
-      {/* Register Form */}
+      {/* THe register Form */}
       <form onSubmit={handleRegister}>
         <h2 className="text-lg font-semibold mb-3">Register</h2>
         <input

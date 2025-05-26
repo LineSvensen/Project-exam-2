@@ -1,5 +1,5 @@
 import React from "react";
-import useFilterStore from "../stores/filterStore"; // adjust path if needed
+import useFilterStore from "../stores/filterStore"; 
 export default function SortBy({ value, onChange }) {
   return (
     <div className="mb-6 font-inter ">

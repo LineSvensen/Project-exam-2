@@ -31,7 +31,7 @@ export default function EditProfileModal({ onClose, onUpdated }) {
     };
 
     try {
-      console.log("Sending:", payload);
+      
 
       const res = await fetch(
         `https://v2.api.noroff.dev/holidaze/profiles/${user.name}`,
@@ -50,7 +50,7 @@ export default function EditProfileModal({ onClose, onUpdated }) {
       );
 
       const data = await res.json();
-      console.log("Returned:", data);
+      
 
       if (!res.ok) {
         throw new Error(data.errors?.[0]?.message || "Failed to update");

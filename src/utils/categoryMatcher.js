@@ -7,7 +7,7 @@ export function matchesCategory(
   keywords
 ) {
   if (!Array.isArray(keywords) || keywords.length === 0) {
-    return false; // Prevents `.some()` on undefined or non-array
+    return false; 
   }
 
   const combined = [

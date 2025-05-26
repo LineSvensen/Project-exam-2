@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import useAuthStore from "./authStore"; // Ensure the path is correct
+import useAuthStore from "./authStore"; 
 
 const useFavouritesStore = create((set, get) => ({
   favourites: [],

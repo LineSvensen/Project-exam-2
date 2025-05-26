@@ -39,7 +39,7 @@ export default function CategoryFilter({ onSelect }) {
 
   return (
     <>
-      {/* Desktop layout (unchanged) */}
+      {/* Desktop layout (unchanged). normal.  */}
       <div className="hidden sm:flex flex-wrap gap-4 mb-6 justify-between">
         {categories.map((cat) => (
           <button
@@ -57,7 +57,7 @@ export default function CategoryFilter({ onSelect }) {
         ))}
       </div>
 
-      {/* Mobile: first 3 + "More" button */}
+      {/* on Mobile: first 3 category icon and + "More" button */}
       <div className="flex sm:hidden gap-4 mb-6 overflow-x-auto no-scrollbar">
         {categories.slice(0, 3).map((cat) => (
           <button
@@ -83,9 +83,9 @@ export default function CategoryFilter({ onSelect }) {
         </button>
       </div>
 
-      {/* Mobile modal for all categories */}
+      {/* Mobile modal - all categories icons shows up */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex justify-center items-center">
+        <div className="fixed inset-0 bg-black/50 bg-opacity-40 z-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg max-w-sm w-full shadow-lg mx-4">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-semibold">Choose a Category</h2>

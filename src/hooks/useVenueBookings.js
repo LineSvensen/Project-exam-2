@@ -30,7 +30,6 @@ export function useVenueBookings() {
       const bookingsData = data?.data?.bookings ?? [];
       setBookings(bookingsData);
     } catch (err) {
-      console.error("useVenueBookings error:", err.message);
       setError(err.message);
     } finally {
       setLoading(false);

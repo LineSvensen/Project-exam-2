@@ -1,4 +1,3 @@
-// src/components/Loaders/PublishedLoader.jsx
 import Lottie from "lottie-react";
 import animationData from "../../../assets/published-loader.json";
 

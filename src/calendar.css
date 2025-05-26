@@ -1,12 +1,9 @@
-/* calendar.css */
 .rdp {
-  --rdp-accent-color: #14b8a6; /* Teal */
+  --rdp-accent-color: #14b8a6;
   --rdp-background-color: white;
   --rdp-accent-color-dark: #0f766e;
-  --rdp-selected-color: white;
-  --rdp-selected-bg-color: #14b8a6;
-  --rdp-today-color: #14b8a6;
   font-family: "Inter", sans-serif;
+  
 }
 
 .rdp-month {
@@ -16,24 +13,6 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-.rdp-day {
-  transition: all 0.2s ease;
-  border-radius: 8px;
-}
-
-.rdp-day:hover {
-  background-color: #d1fae5;
-}
-
-.rdp-day_selected,
-.rdp-day_selected:focus,
-.rdp-day_selected:hover {
-  background-color: #14b8a6 !important;
-  color: white !important;
-  font-weight: bold;
-  border-radius: 50%;
-}
-
 .rdp-day_disabled {
   color: #9ca3af !important;
   background-color: #b0b4bb;
@@ -41,33 +20,48 @@
   pointer-events: none;
 }
 
-.rdp-caption {
-  font-weight: 600;
-  color: #111827;
-}
-
-.rdp-head_cell {
-  color: #6b7280;
-  font-size: 0.875rem;
-}
-
 .rdp-nav {
   justify-content: center !important;
   margin-bottom: 1rem;
 }
 
-.rdp-nav_button {
-  color: #14b8a6 !important;
-  font-size: 1.25rem;
-  padding: 0.25rem 0.5rem;
+.rdp-chevron {
+  width: 32px !important;
+  height: 32px !important;
 }
 
-.rdp-caption_label {
-  font-weight: bold;
-  font-size: 1rem;
+.rdp-nav svg polygon {
+  fill: var(--secondary-teal-light) !important;
+  padding: 8px;
 }
 
-.rdp-day_today {
-  color: #14b8a6 !important;
-  font-weight: bold;
+.rdp-nav button:hover svg polygon {
+  fill: var(--secondary-teal-dark) !important;
+}
+
+.rdp-month {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.rdp-range_start .rdp-day_button {
+  background-color: var(--secondary-teal) !important;
+}
+
+.rdp-range_end .rdp-day_button {
+  background-color: var(--secondary-teal) !important;
+}
+
+.rdp-range_middle .rdp-day_button {
+  color: var(--neutral-black) !important;
+}
+
+.rdp-day:hover {
+  background-color: #2f7f881e !important;
+}
+
+.button-descret:hover {
+  background-color: var(--neutral-grey-light);
 }

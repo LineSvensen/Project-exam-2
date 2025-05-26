@@ -173,46 +173,6 @@
   align-items: center;
 }
 
-.rdp-chevron {
-  width: 32px !important;
-  height: 32px !important;
-}
-
-.rdp-nav svg polygon {
-  fill: var(--secondary-teal-light) !important;
-  padding: 8px;
-}
-
-.rdp-nav button:hover svg polygon {
-  fill: var(--secondary-teal-dark) !important; /* Darker on hover */
-}
-
-.rdp-month {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.rdp-range_start .rdp-day_button {
-  background-color: var(--secondary-teal) !important;
-}
-
-.rdp-range_end .rdp-day_button {
-  background-color: var(--secondary-teal) !important;
-}
-
-.rdp-range_middle .rdp-day_button {
-  color: var(--neutral-black) !important;
-}
-
-.rdp-day:hover {
-  background-color: #2f7f881e !important;
-}
-
-.button-descret:hover {
-  background-color: var(--neutral-grey-light);
-}
 
 .warning-text {
   color: var(--primary-red);

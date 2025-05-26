@@ -32,10 +32,6 @@ export default function SinglePage() {
   } = useVenueBookings(id);
 
   useEffect(() => {
-    console.log("📦 Dates received by SinglePage:", selectedDates);
-  }, [selectedDates]);
-
-  useEffect(() => {
     if (venue?.name) {
       document.title = `${venue.name} | Holidaze`;
     } else {

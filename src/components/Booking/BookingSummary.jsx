@@ -93,7 +93,7 @@ const BookingSummary = forwardRef(function BookingSummary(
         },
       });
     } catch (err) {
-      console.error("❌ Booking error:", err);
+      
       setError("Booking failed. Please try again.");
     }
   };

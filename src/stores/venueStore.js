@@ -1,4 +1,3 @@
-// src/stores/venueStore.js
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -9,7 +8,7 @@ const useVenueStore = create(
       setVenues: (venues) => set({ allVenues: venues }),
     }),
     {
-      name: "holidaze-venues", // key in localStorage
+      name: "holidaze-venues",
     }
   )
 );

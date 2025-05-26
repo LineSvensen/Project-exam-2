@@ -1,5 +1,5 @@
 import Lottie from "lottie-react";
-import animationData from "../../../assets/redhouse.json"; // make sure this path and file are correct
+import animationData from "../../../assets/redhouse.json"; 
 
 export default function HolidazeLoader() {
   return (

@@ -1,4 +1,3 @@
-// utils/featured.js
 export const FEATURED_IDS = [
   "89501624-3b2a-4077-8019-8531fd5af694",
   "fc0a593b-a005-4ab7-9c6e-b7a3f8d4064e",
@@ -18,5 +17,5 @@ export const FEATURED_IDS = [
   "a6c88ebc-335f-4efe-bf61-a980a1e943f6",
   "7fc292df-99f0-4f8f-919f-b42d85dd096d",
 
-  // Selected venues with id !
+  // Selected venues with id !!
 ];

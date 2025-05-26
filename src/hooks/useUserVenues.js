@@ -1,4 +1,3 @@
-// hooks/useUserVenues.js
 import { useEffect, useState } from "react";
 import useAuthStore from "../stores/authStore";
 
@@ -9,11 +8,11 @@ export function useUserVenues() {
   const [venues, setVenues] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { user, token } = useAuthStore(); // ✅ Make sure you use token if required
+  const { user, token } = useAuthStore();
 
   useEffect(() => {
     if (!user?.name || !token) {
-      setLoading(false); // ✅ prevent forever-loading if user is missing
+      setLoading(false);
       return;
     }
 
@@ -36,7 +35,7 @@ export function useUserVenues() {
       } catch (err) {
         setError(err.message);
       } finally {
-        setLoading(false); // ✅ ensure loading is stopped
+        setLoading(false);
       }
     }
 

@@ -1,4 +1,3 @@
-// pages/LoginRegisterPage/index.jsx
 import LoginRegisterForm from "../../components/LoginRegisterForm";
 import BackButton from "../../components/Buttons/BackButton";
 import { useEffect } from "react";

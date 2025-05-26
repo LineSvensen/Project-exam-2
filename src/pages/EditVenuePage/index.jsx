@@ -36,7 +36,7 @@ export default function EditVenuePage() {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  // const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+
 
   useEffect(() => {
     async function fetchVenue() {
@@ -131,24 +131,7 @@ export default function EditVenuePage() {
     }
   };
 
-  // const handleDelete = async () => {
-  //   try {
-  //     const res = await fetch(`${API_BASE}/venues/${id}`, {
-  //       method: "DELETE",
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //         "X-Noroff-API-Key": API_KEY,
-  //       },
-  //     });
-
-  //     if (!res.ok) throw new Error("Failed to delete venue");
-
-  //     alert("Venue deleted");
-  //     navigate("/venues");
-  //   } catch (err) {
-  //     alert(err.message);
-  //   }
-  // };
+  
 
   if (error) return <p className="text-red-500">{error}</p>;
   if (showLoader) return <PublishedLoader />;
@@ -254,13 +237,7 @@ export default function EditVenuePage() {
             Cancel
           </button>
 
-          {/* <button
-            type="button"
-            onClick={() => setShowConfirmDelete(true)}
-            className="button-destructive"
-          >
-            Delete Venue
-          </button> */}
+        
         </div>
       </form>
     </div>

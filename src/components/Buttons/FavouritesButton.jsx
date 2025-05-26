@@ -1,4 +1,3 @@
-// src/components/FavouriteButton.jsx
 import { useState, useEffect } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import useAuthStore from "../../stores/authStore";

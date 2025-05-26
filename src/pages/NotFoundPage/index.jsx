@@ -1,4 +1,3 @@
-// src/pages/NotFoundPage.jsx
 import { Link } from "react-router-dom";
 import notFoundImg from "../../assets/404.png";
 import { useEffect } from "react";

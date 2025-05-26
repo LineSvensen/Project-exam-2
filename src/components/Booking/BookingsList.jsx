@@ -1,4 +1,3 @@
-// components/Venue/BookingsList.jsx
 import { useEffect, useState } from "react";
 
 export default function BookingsList({ venueId }) {
