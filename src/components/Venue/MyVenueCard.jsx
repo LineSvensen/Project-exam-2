@@ -86,13 +86,13 @@ export default function MyVenueCard({ venue }) {
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => setShowConfirm(false)}
-                className="bg-gray-300 px-4 py-2 rounded"
+                className="bg-gray-300 px-4 py-2 rounded cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 onClick={handleDelete}
-                className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+                className="bg-red-600 text-white px-4 py-2 rounded cursor-pointer hover:bg-red-700"
               >
                 Yes, Delete
               </button>
